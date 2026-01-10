@@ -54,27 +54,11 @@ public class DoublyLinkedList<T> {
         throw new UnsupportedOperationException("Not implemented");
     }
 
-    public boolean contains(T value) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
     public int size() {
         throw new UnsupportedOperationException("Not implemented");
     }
 
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    public void clear() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    public Object[] toArray() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    public void reverse() {
         throw new UnsupportedOperationException("Not implemented");
     }
 
