@@ -5,13 +5,13 @@ public class SinglyLinkedList<T> {
     public int size;
 
     public void addAt(int index, T value) {
-        if (isEmpty()) {
-            addFirst(value);
-            return;
-        }
-
         if (index < 0 || index > size) {
             throw new ArrayIndexOutOfBoundsException();
+        }
+
+        if (isEmpty() || index == 0) {
+            addFirst(value);
+            return;
         }
 
         var curr = head;
@@ -37,14 +37,23 @@ public class SinglyLinkedList<T> {
         }
 
         head = newHead;
+        size++;
     }
 
     public void addLast(T value) {
         if (head == null) {
             addFirst(value);
+            return;
         }
 
-        addAt(size, value);
+        var curr = head;
+
+        while (curr.next != null) {
+            curr = curr.next;
+        }
+
+        curr.next = new Node<>(value);
+        size++;
     }
 
     public T deleteAt(int index) {
@@ -81,16 +90,33 @@ public class SinglyLinkedList<T> {
         return deleteAt(size - 1);
     }
 
+    public T get(int index) {
+        if (index < 0 || index > size) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+
+        var curr = head;
+
+        // element 3 - index 2 --
+
+        // 0 - head
+        // for 0 - head.next == element 1
+        // for 1 - element 1.next - element 2
+        // for 2 - <2>.next -- element 3
+
+        for (int i = 0; i < index; i++) {
+            curr = curr.next;
+        }
+
+        return curr.value;
+    }
+
     public T getFirst() {
-        throw new UnsupportedOperationException("Not implemented");
+        return get(0);
     }
 
     public T getLast() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    public T get(int index) {
-        throw new UnsupportedOperationException("Not implemented");
+        return get(size - 1);
     }
 
     public void set(int index, T value) {
@@ -125,6 +151,14 @@ public class SinglyLinkedList<T> {
 
         public Node(T value) {
             this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return "Node - {" +
+                    "value = " + value +
+                    ", next = " + next +
+                    '}';
         }
     }
 }
