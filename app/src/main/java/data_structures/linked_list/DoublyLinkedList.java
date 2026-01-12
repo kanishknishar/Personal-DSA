@@ -1,6 +1,6 @@
-package data_structures;
+package data_structures.linked_list;
 
-public class SinglyLinkedList<T> {
+public class DoublyLinkedList<T> {
 
     public void addFirst(T value) {
         throw new UnsupportedOperationException("Not implemented");
@@ -13,11 +13,11 @@ public class SinglyLinkedList<T> {
     public void insertAt(int index, T value) {
         throw new UnsupportedOperationException("Not implemented");
     }
-
+    // To-do
     public T removeFirst() {
         throw new UnsupportedOperationException("Not implemented");
     }
-
+    // To-do
     public T removeLast() {
         throw new UnsupportedOperationException("Not implemented");
     }
@@ -50,11 +50,23 @@ public class SinglyLinkedList<T> {
         throw new UnsupportedOperationException("Not implemented");
     }
 
+    public int lastIndexOf(T value) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
     public int size() {
         throw new UnsupportedOperationException("Not implemented");
     }
 
     public boolean isEmpty() {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    public java.util.Iterator<T> iterator() {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    public java.util.Iterator<T> descendingIterator() {
         throw new UnsupportedOperationException("Not implemented");
     }
 

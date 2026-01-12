@@ -1,8 +1,9 @@
 package data_structures;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import data_structures.linked_list.SinglyLinkedList;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,8 +16,6 @@ class SinglyLinkedListTest {
 
     private SinglyLinkedList<Integer> list;
     private static int totalTests = 0;
-    private static int passedTests = 0;
-    private static int failedTests = 0;
 
     @BeforeEach
     void setUp(TestInfo testInfo) {
@@ -31,12 +30,12 @@ class SinglyLinkedListTest {
         System.out.println("SINGLY LINKED LIST TEST SUMMARY");
         System.out.println("=".repeat(80));
         System.out.printf("Total Tests:   %d%n", totalTests);
+        int passedTests = 0;
         System.out.printf("Passed:        %d (%.1f%%)%n", passedTests, (passedTests * 100.0 / totalTests));
+        int failedTests = 0;
         System.out.printf("Failed:        %d (%.1f%%)%n", failedTests, (failedTests * 100.0 / totalTests));
         System.out.println("=".repeat(80));
     }
-
-    
 
     @Nested
     @DisplayName("size()")
@@ -46,8 +45,8 @@ class SinglyLinkedListTest {
         @DisplayName("returns 0 for newly created list")
         void returnsZeroForNewList() {
             assertThat(list.size())
-                .as("Expected size of new list to be 0, but got %d", list.size())
-                .isEqualTo(0);
+                    .as("Expected size of new list to be 0, but got %d", list.size())
+                    .isEqualTo(0);
         }
 
         @Test
@@ -56,8 +55,8 @@ class SinglyLinkedListTest {
             list.addFirst(1);
 
             assertThat(list.size())
-                .as("Expected size to be 1 after adding one element, but got %d", list.size())
-                .isEqualTo(1);
+                    .as("Expected size to be 1 after adding one element, but got %d", list.size())
+                    .isEqualTo(1);
         }
 
         @Test
@@ -68,8 +67,8 @@ class SinglyLinkedListTest {
             list.addFirst(3);
 
             assertThat(list.size())
-                .as("Expected size to be 3 after adding three elements, but got %d", list.size())
-                .isEqualTo(3);
+                    .as("Expected size to be 3 after adding three elements, but got %d", list.size())
+                    .isEqualTo(3);
         }
 
         @Test
@@ -80,8 +79,8 @@ class SinglyLinkedListTest {
             list.removeFirst();
 
             assertThat(list.size())
-                .as("Expected size to be 1 after add(2) then remove(1), but got %d", list.size())
-                .isEqualTo(1);
+                    .as("Expected size to be 1 after add(2) then remove(1), but got %d", list.size())
+                    .isEqualTo(1);
         }
 
     }
@@ -94,8 +93,8 @@ class SinglyLinkedListTest {
         @DisplayName("returns true for newly created list")
         void returnsTrueForNewList() {
             assertThat(list.isEmpty())
-                .as("Expected isEmpty() to return true for new list, but got false")
-                .isTrue();
+                    .as("Expected isEmpty() to return true for new list, but got false")
+                    .isTrue();
         }
 
         @Test
@@ -104,8 +103,8 @@ class SinglyLinkedListTest {
             list.addFirst(1);
 
             assertThat(list.isEmpty())
-                .as("Expected isEmpty() to return false after adding element, but got true")
-                .isFalse();
+                    .as("Expected isEmpty() to return false after adding element, but got true")
+                    .isFalse();
         }
 
         @Test
@@ -115,8 +114,8 @@ class SinglyLinkedListTest {
             list.removeFirst();
 
             assertThat(list.isEmpty())
-                .as("Expected isEmpty() to return true after removing all elements, but got false")
-                .isTrue();
+                    .as("Expected isEmpty() to return true after removing all elements, but got false")
+                    .isTrue();
         }
 
     }
@@ -131,8 +130,8 @@ class SinglyLinkedListTest {
             list.addFirst(42);
 
             assertThat(list.getFirst())
-                .as("Expected getFirst() to return 42 after addFirst(42), but got %s", list.getFirst())
-                .isEqualTo(42);
+                    .as("Expected getFirst() to return 42 after addFirst(42), but got %s", list.getFirst())
+                    .isEqualTo(42);
         }
 
         @Test
@@ -142,8 +141,8 @@ class SinglyLinkedListTest {
             list.addFirst(2);
 
             assertThat(list.getFirst())
-                .as("Expected getFirst() to return 2 after addFirst(2), but got %s", list.getFirst())
-                .isEqualTo(2);
+                    .as("Expected getFirst() to return 2 after addFirst(2), but got %s", list.getFirst())
+                    .isEqualTo(2);
         }
 
         @Test
@@ -154,11 +153,11 @@ class SinglyLinkedListTest {
             list.addFirst(3);
 
             assertThat(list.getFirst())
-                .as("Expected getFirst() to be 3 after multiple addFirst")
-                .isEqualTo(3);
+                    .as("Expected getFirst() to be 3 after multiple addFirst")
+                    .isEqualTo(3);
             assertThat(list.size())
-                .as("Expected size to be 3")
-                .isEqualTo(3);
+                    .as("Expected size to be 3")
+                    .isEqualTo(3);
         }
 
         @Test
@@ -168,8 +167,8 @@ class SinglyLinkedListTest {
             stringList.addFirst(null);
 
             assertThat(stringList.getFirst())
-                .as("Expected getFirst() to return null after addFirst(null), but got %s", stringList.getFirst())
-                .isNull();
+                    .as("Expected getFirst() to return null after addFirst(null), but got %s", stringList.getFirst())
+                    .isNull();
         }
 
         @Test
@@ -178,8 +177,8 @@ class SinglyLinkedListTest {
             list.addFirst(1);
 
             assertThat(list.size())
-                .as("Expected size to be 1 after addFirst(1), but got %d", list.size())
-                .isEqualTo(1);
+                    .as("Expected size to be 1 after addFirst(1), but got %d", list.size())
+                    .isEqualTo(1);
         }
     }
 
@@ -193,8 +192,8 @@ class SinglyLinkedListTest {
             list.addLast(42);
 
             assertThat(list.getLast())
-                .as("Expected getLast() to return 42 after addLast(42), but got %s", list.getLast())
-                .isEqualTo(42);
+                    .as("Expected getLast() to return 42 after addLast(42), but got %s", list.getLast())
+                    .isEqualTo(42);
         }
 
         @Test
@@ -204,8 +203,8 @@ class SinglyLinkedListTest {
             list.addLast(2);
 
             assertThat(list.getLast())
-                .as("Expected getLast() to return 2 after addLast(2), but got %s", list.getLast())
-                .isEqualTo(2);
+                    .as("Expected getLast() to return 2 after addLast(2), but got %s", list.getLast())
+                    .isEqualTo(2);
         }
 
         @Test
@@ -216,11 +215,11 @@ class SinglyLinkedListTest {
             list.addLast(3);
 
             assertThat(list.getFirst())
-                .as("Expected getFirst() to be 1 after multiple addLast")
-                .isEqualTo(1);
+                    .as("Expected getFirst() to be 1 after multiple addLast")
+                    .isEqualTo(1);
             assertThat(list.getLast())
-                .as("Expected getLast() to be 3 after multiple addLast")
-                .isEqualTo(3);
+                    .as("Expected getLast() to be 3 after multiple addLast")
+                    .isEqualTo(3);
         }
 
         @Test
@@ -230,8 +229,8 @@ class SinglyLinkedListTest {
             stringList.addLast(null);
 
             assertThat(stringList.getLast())
-                .as("Expected getLast() to return null after addLast(null), but got %s", stringList.getLast())
-                .isNull();
+                    .as("Expected getLast() to return null after addLast(null), but got %s", stringList.getLast())
+                    .isNull();
         }
 
         @Test
@@ -240,8 +239,8 @@ class SinglyLinkedListTest {
             list.addLast(42);
 
             assertThat(list.getFirst())
-                .as("Expected getFirst() and getLast() to be equal for single element list")
-                .isEqualTo(list.getLast());
+                    .as("Expected getFirst() and getLast() to be equal for single element list")
+                    .isEqualTo(list.getLast());
         }
     }
 
@@ -255,8 +254,8 @@ class SinglyLinkedListTest {
             list.insertAt(0, 42);
 
             assertThat(list.get(0))
-                .as("Expected get(0) to return 42 after insertAt(0, 42), but got %s", list.get(0))
-                .isEqualTo(42);
+                    .as("Expected get(0) to return 42 after insertAt(0, 42), but got %s", list.get(0))
+                    .isEqualTo(42);
         }
 
         @Test
@@ -266,9 +265,10 @@ class SinglyLinkedListTest {
             list.addLast(2);
             list.insertAt(0, 0);
 
-            assertThat(list.toArray())
-                .as("Expected list to be [0, 1, 2] after insertAt(0, 0), but got %s", java.util.Arrays.toString(list.toArray()))
-                .containsExactly(0, 1, 2);
+            assertThat(list.size()).isEqualTo(3);
+            assertThat(list.get(0)).isEqualTo(0);
+            assertThat(list.get(1)).isEqualTo(1);
+            assertThat(list.get(2)).isEqualTo(2);
         }
 
         @Test
@@ -278,9 +278,10 @@ class SinglyLinkedListTest {
             list.addLast(3);
             list.insertAt(1, 2);
 
-            assertThat(list.toArray())
-                .as("Expected list to be [1, 2, 3] after insertAt(1, 2), but got %s", java.util.Arrays.toString(list.toArray()))
-                .containsExactly(1, 2, 3);
+            assertThat(list.size()).isEqualTo(3);
+            assertThat(list.get(0)).isEqualTo(1);
+            assertThat(list.get(1)).isEqualTo(2);
+            assertThat(list.get(2)).isEqualTo(3);
         }
 
         @Test
@@ -290,17 +291,18 @@ class SinglyLinkedListTest {
             list.addLast(2);
             list.insertAt(2, 3);
 
-            assertThat(list.toArray())
-                .as("Expected list to be [1, 2, 3] after insertAt(2, 3), but got %s", java.util.Arrays.toString(list.toArray()))
-                .containsExactly(1, 2, 3);
+            assertThat(list.size()).isEqualTo(3);
+            assertThat(list.get(0)).isEqualTo(1);
+            assertThat(list.get(1)).isEqualTo(2);
+            assertThat(list.get(2)).isEqualTo(3);
         }
 
         @Test
         @DisplayName("throws exception for negative index")
         void throwsForNegativeIndex() {
             assertThatThrownBy(() -> list.insertAt(-1, 42))
-                .as("Expected insertAt(-1, 42) to throw IndexOutOfBoundsException")
-                .isInstanceOf(IndexOutOfBoundsException.class);
+                    .as("Expected insertAt(-1, 42) to throw IndexOutOfBoundsException")
+                    .isInstanceOf(IndexOutOfBoundsException.class);
         }
 
         @Test
@@ -309,8 +311,8 @@ class SinglyLinkedListTest {
             list.addLast(1);
 
             assertThatThrownBy(() -> list.insertAt(5, 42))
-                .as("Expected insertAt(5, 42) to throw IndexOutOfBoundsException when size is 1")
-                .isInstanceOf(IndexOutOfBoundsException.class);
+                    .as("Expected insertAt(5, 42) to throw IndexOutOfBoundsException when size is 1")
+                    .isInstanceOf(IndexOutOfBoundsException.class);
         }
 
         @Test
@@ -321,8 +323,8 @@ class SinglyLinkedListTest {
             stringList.insertAt(1, null);
 
             assertThat(stringList.get(1))
-                .as("Expected get(1) to return null after insertAt(1, null), but got %s", stringList.get(1))
-                .isNull();
+                    .as("Expected get(1) to return null after insertAt(1, null), but got %s", stringList.get(1))
+                    .isNull();
         }
     }
 
@@ -339,8 +341,8 @@ class SinglyLinkedListTest {
             Integer removed = list.removeFirst();
 
             assertThat(removed)
-                .as("Expected removeFirst() to return 1, but got %s", removed)
-                .isEqualTo(1);
+                    .as("Expected removeFirst() to return 1, but got %s", removed)
+                    .isEqualTo(1);
         }
 
         @Test
@@ -351,8 +353,8 @@ class SinglyLinkedListTest {
             list.removeFirst();
 
             assertThat(list.getFirst())
-                .as("Expected getFirst() to return 2 after removeFirst(), but got %s", list.getFirst())
-                .isEqualTo(2);
+                    .as("Expected getFirst() to return 2 after removeFirst(), but got %s", list.getFirst())
+                    .isEqualTo(2);
         }
 
         @Test
@@ -363,16 +365,16 @@ class SinglyLinkedListTest {
             list.removeFirst();
 
             assertThat(list.size())
-                .as("Expected size to be 1 after removeFirst(), but got %d", list.size())
-                .isEqualTo(1);
+                    .as("Expected size to be 1 after removeFirst(), but got %d", list.size())
+                    .isEqualTo(1);
         }
 
         @Test
         @DisplayName("throws exception on empty list")
         void throwsOnEmptyList() {
             assertThatThrownBy(() -> list.removeFirst())
-                .as("Expected removeFirst() on empty list to throw NoSuchElementException")
-                .isInstanceOf(java.util.NoSuchElementException.class);
+                    .as("Expected removeFirst() on empty list to throw NoSuchElementException")
+                    .isInstanceOf(java.util.NoSuchElementException.class);
         }
 
         @Test
@@ -382,8 +384,8 @@ class SinglyLinkedListTest {
             list.removeFirst();
 
             assertThat(list.isEmpty())
-                .as("Expected isEmpty() to return true after removing only element, but got false")
-                .isTrue();
+                    .as("Expected isEmpty() to return true after removing only element, but got false")
+                    .isTrue();
         }
 
         @Test
@@ -395,8 +397,8 @@ class SinglyLinkedListTest {
             String removed = stringList.removeFirst();
 
             assertThat(removed)
-                .as("Expected removeFirst() to return null, but got %s", removed)
-                .isNull();
+                    .as("Expected removeFirst() to return null, but got %s", removed)
+                    .isNull();
         }
     }
 
@@ -413,8 +415,8 @@ class SinglyLinkedListTest {
             Integer removed = list.removeLast();
 
             assertThat(removed)
-                .as("Expected removeLast() to return 2, but got %s", removed)
-                .isEqualTo(2);
+                    .as("Expected removeLast() to return 2, but got %s", removed)
+                    .isEqualTo(2);
         }
 
         @Test
@@ -425,8 +427,8 @@ class SinglyLinkedListTest {
             list.removeLast();
 
             assertThat(list.getLast())
-                .as("Expected getLast() to return 1 after removeLast(), but got %s", list.getLast())
-                .isEqualTo(1);
+                    .as("Expected getLast() to return 1 after removeLast(), but got %s", list.getLast())
+                    .isEqualTo(1);
         }
 
         @Test
@@ -437,16 +439,16 @@ class SinglyLinkedListTest {
             list.removeLast();
 
             assertThat(list.size())
-                .as("Expected size to be 1 after removeLast(), but got %d", list.size())
-                .isEqualTo(1);
+                    .as("Expected size to be 1 after removeLast(), but got %d", list.size())
+                    .isEqualTo(1);
         }
 
         @Test
         @DisplayName("throws exception on empty list")
         void throwsOnEmptyList() {
             assertThatThrownBy(() -> list.removeLast())
-                .as("Expected removeLast() on empty list to throw NoSuchElementException")
-                .isInstanceOf(java.util.NoSuchElementException.class);
+                    .as("Expected removeLast() on empty list to throw NoSuchElementException")
+                    .isInstanceOf(java.util.NoSuchElementException.class);
         }
 
         @Test
@@ -456,8 +458,8 @@ class SinglyLinkedListTest {
             list.removeLast();
 
             assertThat(list.isEmpty())
-                .as("Expected isEmpty() to return true after removing only element, but got false")
-                .isTrue();
+                    .as("Expected isEmpty() to return true after removing only element, but got false")
+                    .isTrue();
         }
 
         @Test
@@ -468,11 +470,11 @@ class SinglyLinkedListTest {
             Integer removed = list.removeLast();
 
             assertThat(removed)
-                .as("Expected removeLast() to return 42 for single element list, but got %s", removed)
-                .isEqualTo(42);
+                    .as("Expected removeLast() to return 42 for single element list, but got %s", removed)
+                    .isEqualTo(42);
             assertThat(list.isEmpty())
-                .as("Expected list to be empty after removeLast() on single element, but isEmpty() returned false")
-                .isTrue();
+                    .as("Expected list to be empty after removeLast() on single element, but isEmpty() returned false")
+                    .isTrue();
         }
     }
 
@@ -489,11 +491,10 @@ class SinglyLinkedListTest {
             Integer removed = list.removeAt(0);
 
             assertThat(removed)
-                .as("Expected removeAt(0) to return 1, but got %s", removed)
-                .isEqualTo(1);
-            assertThat(list.toArray())
-                .as("Expected list to be [2] after removeAt(0), but got %s", java.util.Arrays.toString(list.toArray()))
-                .containsExactly(2);
+                    .as("Expected removeAt(0) to return 1, but got %s", removed)
+                    .isEqualTo(1);
+            assertThat(list.size()).isEqualTo(1);
+            assertThat(list.get(0)).isEqualTo(2);
         }
 
         @Test
@@ -506,11 +507,11 @@ class SinglyLinkedListTest {
             Integer removed = list.removeAt(1);
 
             assertThat(removed)
-                .as("Expected removeAt(1) to return 2, but got %s", removed)
-                .isEqualTo(2);
-            assertThat(list.toArray())
-                .as("Expected list to be [1, 3] after removeAt(1), but got %s", java.util.Arrays.toString(list.toArray()))
-                .containsExactly(1, 3);
+                    .as("Expected removeAt(1) to return 2, but got %s", removed)
+                    .isEqualTo(2);
+            assertThat(list.size()).isEqualTo(2);
+            assertThat(list.get(0)).isEqualTo(1);
+            assertThat(list.get(1)).isEqualTo(3);
         }
 
         @Test
@@ -523,11 +524,11 @@ class SinglyLinkedListTest {
             Integer removed = list.removeAt(2);
 
             assertThat(removed)
-                .as("Expected removeAt(2) to return 3, but got %s", removed)
-                .isEqualTo(3);
-            assertThat(list.toArray())
-                .as("Expected list to be [1, 2] after removeAt(2), but got %s", java.util.Arrays.toString(list.toArray()))
-                .containsExactly(1, 2);
+                    .as("Expected removeAt(2) to return 3, but got %s", removed)
+                    .isEqualTo(3);
+            assertThat(list.size()).isEqualTo(2);
+            assertThat(list.get(0)).isEqualTo(1);
+            assertThat(list.get(1)).isEqualTo(2);
         }
 
         @Test
@@ -536,8 +537,8 @@ class SinglyLinkedListTest {
             list.addLast(1);
 
             assertThatThrownBy(() -> list.removeAt(-1))
-                .as("Expected removeAt(-1) to throw IndexOutOfBoundsException")
-                .isInstanceOf(IndexOutOfBoundsException.class);
+                    .as("Expected removeAt(-1) to throw IndexOutOfBoundsException")
+                    .isInstanceOf(IndexOutOfBoundsException.class);
         }
 
         @Test
@@ -546,8 +547,8 @@ class SinglyLinkedListTest {
             list.addLast(1);
 
             assertThatThrownBy(() -> list.removeAt(1))
-                .as("Expected removeAt(1) to throw IndexOutOfBoundsException when size is 1")
-                .isInstanceOf(IndexOutOfBoundsException.class);
+                    .as("Expected removeAt(1) to throw IndexOutOfBoundsException when size is 1")
+                    .isInstanceOf(IndexOutOfBoundsException.class);
         }
 
         @Test
@@ -556,105 +557,16 @@ class SinglyLinkedListTest {
             list.addLast(1);
 
             assertThatThrownBy(() -> list.removeAt(5))
-                .as("Expected removeAt(5) to throw IndexOutOfBoundsException when size is 1")
-                .isInstanceOf(IndexOutOfBoundsException.class);
+                    .as("Expected removeAt(5) to throw IndexOutOfBoundsException when size is 1")
+                    .isInstanceOf(IndexOutOfBoundsException.class);
         }
 
         @Test
         @DisplayName("throws exception on empty list")
         void throwsOnEmptyList() {
             assertThatThrownBy(() -> list.removeAt(0))
-                .as("Expected removeAt(0) on empty list to throw IndexOutOfBoundsException")
-                .isInstanceOf(IndexOutOfBoundsException.class);
-        }
-    }
-
-    @Nested
-    @DisplayName("remove(value)")
-    class RemoveByValueTests {
-
-        @Test
-        @DisplayName("removes first occurrence and returns true")
-        void removesFirstOccurrenceReturnsTrue() {
-            list.addLast(1);
-            list.addLast(2);
-            list.addLast(1);
-
-            boolean removed = list.remove(1);
-
-            assertThat(removed)
-                .as("Expected remove(1) to return true, but got false")
-                .isTrue();
-            assertThat(list.toArray())
-                .as("Expected list to be [2, 1] after remove(1), but got %s", java.util.Arrays.toString(list.toArray()))
-                .containsExactly(2, 1);
-        }
-
-        @Test
-        @DisplayName("returns false when value not found")
-        void returnsFalseWhenValueNotFound() {
-            list.addLast(1);
-            list.addLast(2);
-
-            boolean removed = list.remove(99);
-
-            assertThat(removed)
-                .as("Expected remove(99) to return false when value not in list, but got true")
-                .isFalse();
-        }
-
-        @Test
-        @DisplayName("removes null value from list")
-        void removesNullValue() {
-            SinglyLinkedList<String> stringList = new SinglyLinkedList<>();
-            stringList.addLast("a");
-            stringList.addLast(null);
-            stringList.addLast("b");
-
-            boolean removed = stringList.remove(null);
-
-            assertThat(removed)
-                .as("Expected remove(null) to return true, but got false")
-                .isTrue();
-            assertThat(stringList.toArray())
-                .as("Expected list to be [a, b] after remove(null), but got %s", java.util.Arrays.toString(stringList.toArray()))
-                .containsExactly("a", "b");
-        }
-
-        @Test
-        @DisplayName("returns false on empty list")
-        void returnsFalseOnEmptyList() {
-            boolean removed = list.remove(1);
-
-            assertThat(removed)
-                .as("Expected remove(1) on empty list to return false, but got true")
-                .isFalse();
-        }
-
-        @Test
-        @DisplayName("removes head element correctly")
-        void removesHeadElementCorrectly() {
-            list.addLast(1);
-            list.addLast(2);
-
-            list.remove(1);
-
-            assertThat(list.getFirst())
-                .as("Expected getFirst() to return 2 after removing head, but got %s", list.getFirst())
-                .isEqualTo(2);
-        }
-
-        @Test
-        @DisplayName("removes tail element correctly")
-        void removesTailElementCorrectly() {
-            list.addLast(1);
-            list.addLast(2);
-
-            list.remove(2);
-
-            assertThat(list.getLast())
-                .as("Expected getLast() to return 1 after removing tail, but got %s", list.getLast())
-                .isEqualTo(1);
+                    .as("Expected removeAt(0) on empty list to throw IndexOutOfBoundsException")
+                    .isInstanceOf(IndexOutOfBoundsException.class);
         }
     }
 
@@ -669,16 +581,16 @@ class SinglyLinkedListTest {
             list.addLast(2);
 
             assertThat(list.getFirst())
-                .as("Expected getFirst() to return 1, but got %s", list.getFirst())
-                .isEqualTo(1);
+                    .as("Expected getFirst() to return 1, but got %s", list.getFirst())
+                    .isEqualTo(1);
         }
 
         @Test
         @DisplayName("throws exception on empty list")
         void throwsOnEmptyList() {
             assertThatThrownBy(() -> list.getFirst())
-                .as("Expected getFirst() on empty list to throw NoSuchElementException")
-                .isInstanceOf(java.util.NoSuchElementException.class);
+                    .as("Expected getFirst() on empty list to throw NoSuchElementException")
+                    .isInstanceOf(java.util.NoSuchElementException.class);
         }
 
         @Test
@@ -688,8 +600,8 @@ class SinglyLinkedListTest {
             stringList.addFirst(null);
 
             assertThat(stringList.getFirst())
-                .as("Expected getFirst() to return null, but got %s", stringList.getFirst())
-                .isNull();
+                    .as("Expected getFirst() to return null, but got %s", stringList.getFirst())
+                    .isNull();
         }
     }
 
@@ -704,16 +616,16 @@ class SinglyLinkedListTest {
             list.addLast(2);
 
             assertThat(list.getLast())
-                .as("Expected getLast() to return 2, but got %s", list.getLast())
-                .isEqualTo(2);
+                    .as("Expected getLast() to return 2, but got %s", list.getLast())
+                    .isEqualTo(2);
         }
 
         @Test
         @DisplayName("throws exception on empty list")
         void throwsOnEmptyList() {
             assertThatThrownBy(() -> list.getLast())
-                .as("Expected getLast() on empty list to throw NoSuchElementException")
-                .isInstanceOf(java.util.NoSuchElementException.class);
+                    .as("Expected getLast() on empty list to throw NoSuchElementException")
+                    .isInstanceOf(java.util.NoSuchElementException.class);
         }
 
         @Test
@@ -723,8 +635,8 @@ class SinglyLinkedListTest {
             stringList.addLast(null);
 
             assertThat(stringList.getLast())
-                .as("Expected getLast() to return null, but got %s", stringList.getLast())
-                .isNull();
+                    .as("Expected getLast() to return null, but got %s", stringList.getLast())
+                    .isNull();
         }
     }
 
@@ -739,8 +651,8 @@ class SinglyLinkedListTest {
             list.addLast(2);
 
             assertThat(list.get(0))
-                .as("Expected get(0) to return 1, but got %s", list.get(0))
-                .isEqualTo(1);
+                    .as("Expected get(0) to return 1, but got %s", list.get(0))
+                    .isEqualTo(1);
         }
 
         @Test
@@ -751,8 +663,8 @@ class SinglyLinkedListTest {
             list.addLast(3);
 
             assertThat(list.get(1))
-                .as("Expected get(1) to return 2, but got %s", list.get(1))
-                .isEqualTo(2);
+                    .as("Expected get(1) to return 2, but got %s", list.get(1))
+                    .isEqualTo(2);
         }
 
         @Test
@@ -763,8 +675,8 @@ class SinglyLinkedListTest {
             list.addLast(3);
 
             assertThat(list.get(2))
-                .as("Expected get(2) to return 3, but got %s", list.get(2))
-                .isEqualTo(3);
+                    .as("Expected get(2) to return 3, but got %s", list.get(2))
+                    .isEqualTo(3);
         }
 
         @Test
@@ -773,8 +685,8 @@ class SinglyLinkedListTest {
             list.addLast(1);
 
             assertThatThrownBy(() -> list.get(-1))
-                .as("Expected get(-1) to throw IndexOutOfBoundsException")
-                .isInstanceOf(IndexOutOfBoundsException.class);
+                    .as("Expected get(-1) to throw IndexOutOfBoundsException")
+                    .isInstanceOf(IndexOutOfBoundsException.class);
         }
 
         @Test
@@ -783,8 +695,8 @@ class SinglyLinkedListTest {
             list.addLast(1);
 
             assertThatThrownBy(() -> list.get(1))
-                .as("Expected get(1) to throw IndexOutOfBoundsException when size is 1")
-                .isInstanceOf(IndexOutOfBoundsException.class);
+                    .as("Expected get(1) to throw IndexOutOfBoundsException when size is 1")
+                    .isInstanceOf(IndexOutOfBoundsException.class);
         }
 
         @Test
@@ -793,16 +705,16 @@ class SinglyLinkedListTest {
             list.addLast(1);
 
             assertThatThrownBy(() -> list.get(100))
-                .as("Expected get(100) to throw IndexOutOfBoundsException when size is 1")
-                .isInstanceOf(IndexOutOfBoundsException.class);
+                    .as("Expected get(100) to throw IndexOutOfBoundsException when size is 1")
+                    .isInstanceOf(IndexOutOfBoundsException.class);
         }
 
         @Test
         @DisplayName("throws exception on empty list")
         void throwsOnEmptyList() {
             assertThatThrownBy(() -> list.get(0))
-                .as("Expected get(0) on empty list to throw IndexOutOfBoundsException")
-                .isInstanceOf(IndexOutOfBoundsException.class);
+                    .as("Expected get(0) on empty list to throw IndexOutOfBoundsException")
+                    .isInstanceOf(IndexOutOfBoundsException.class);
         }
     }
 
@@ -819,8 +731,8 @@ class SinglyLinkedListTest {
             list.set(0, 99);
 
             assertThat(list.get(0))
-                .as("Expected get(0) to return 99 after set(0, 99), but got %s", list.get(0))
-                .isEqualTo(99);
+                    .as("Expected get(0) to return 99 after set(0, 99), but got %s", list.get(0))
+                    .isEqualTo(99);
         }
 
         @Test
@@ -833,8 +745,8 @@ class SinglyLinkedListTest {
             list.set(1, 99);
 
             assertThat(list.get(1))
-                .as("Expected get(1) to return 99 after set(1, 99), but got %s", list.get(1))
-                .isEqualTo(99);
+                    .as("Expected get(1) to return 99 after set(1, 99), but got %s", list.get(1))
+                    .isEqualTo(99);
         }
 
         @Test
@@ -846,8 +758,8 @@ class SinglyLinkedListTest {
             list.set(1, 99);
 
             assertThat(list.get(1))
-                .as("Expected get(1) to return 99 after set(1, 99), but got %s", list.get(1))
-                .isEqualTo(99);
+                    .as("Expected get(1) to return 99 after set(1, 99), but got %s", list.get(1))
+                    .isEqualTo(99);
         }
 
         @Test
@@ -859,8 +771,8 @@ class SinglyLinkedListTest {
             list.set(0, 99);
 
             assertThat(list.size())
-                .as("Expected size to remain 2 after set(), but got %d", list.size())
-                .isEqualTo(2);
+                    .as("Expected size to remain 2 after set(), but got %d", list.size())
+                    .isEqualTo(2);
         }
 
         @Test
@@ -869,8 +781,8 @@ class SinglyLinkedListTest {
             list.addLast(1);
 
             assertThatThrownBy(() -> list.set(-1, 99))
-                .as("Expected set(-1, 99) to throw IndexOutOfBoundsException")
-                .isInstanceOf(IndexOutOfBoundsException.class);
+                    .as("Expected set(-1, 99) to throw IndexOutOfBoundsException")
+                    .isInstanceOf(IndexOutOfBoundsException.class);
         }
 
         @Test
@@ -879,16 +791,16 @@ class SinglyLinkedListTest {
             list.addLast(1);
 
             assertThatThrownBy(() -> list.set(1, 99))
-                .as("Expected set(1, 99) to throw IndexOutOfBoundsException when size is 1")
-                .isInstanceOf(IndexOutOfBoundsException.class);
+                    .as("Expected set(1, 99) to throw IndexOutOfBoundsException when size is 1")
+                    .isInstanceOf(IndexOutOfBoundsException.class);
         }
 
         @Test
         @DisplayName("throws exception on empty list")
         void throwsOnEmptyList() {
             assertThatThrownBy(() -> list.set(0, 99))
-                .as("Expected set(0, 99) on empty list to throw IndexOutOfBoundsException")
-                .isInstanceOf(IndexOutOfBoundsException.class);
+                    .as("Expected set(0, 99) on empty list to throw IndexOutOfBoundsException")
+                    .isInstanceOf(IndexOutOfBoundsException.class);
         }
 
         @Test
@@ -900,8 +812,8 @@ class SinglyLinkedListTest {
             stringList.set(0, null);
 
             assertThat(stringList.get(0))
-                .as("Expected get(0) to return null after set(0, null), but got %s", stringList.get(0))
-                .isNull();
+                    .as("Expected get(0) to return null after set(0, null), but got %s", stringList.get(0))
+                    .isNull();
         }
     }
 
@@ -917,8 +829,8 @@ class SinglyLinkedListTest {
             list.addLast(3);
 
             assertThat(list.indexOf(2))
-                .as("Expected indexOf(2) to return 1, but got %d", list.indexOf(2))
-                .isEqualTo(1);
+                    .as("Expected indexOf(2) to return 1, but got %d", list.indexOf(2))
+                    .isEqualTo(1);
         }
 
         @Test
@@ -928,8 +840,8 @@ class SinglyLinkedListTest {
             list.addLast(2);
 
             assertThat(list.indexOf(1))
-                .as("Expected indexOf(1) to return 0, but got %d", list.indexOf(1))
-                .isEqualTo(0);
+                    .as("Expected indexOf(1) to return 0, but got %d", list.indexOf(1))
+                    .isEqualTo(0);
         }
 
         @Test
@@ -940,8 +852,8 @@ class SinglyLinkedListTest {
             list.addLast(3);
 
             assertThat(list.indexOf(3))
-                .as("Expected indexOf(3) to return 2, but got %d", list.indexOf(3))
-                .isEqualTo(2);
+                    .as("Expected indexOf(3) to return 2, but got %d", list.indexOf(3))
+                    .isEqualTo(2);
         }
 
         @Test
@@ -951,16 +863,16 @@ class SinglyLinkedListTest {
             list.addLast(2);
 
             assertThat(list.indexOf(99))
-                .as("Expected indexOf(99) to return -1, but got %d", list.indexOf(99))
-                .isEqualTo(-1);
+                    .as("Expected indexOf(99) to return -1, but got %d", list.indexOf(99))
+                    .isEqualTo(-1);
         }
 
         @Test
         @DisplayName("returns -1 on empty list")
         void returnsMinusOneOnEmptyList() {
             assertThat(list.indexOf(1))
-                .as("Expected indexOf(1) on empty list to return -1, but got %d", list.indexOf(1))
-                .isEqualTo(-1);
+                    .as("Expected indexOf(1) on empty list to return -1, but got %d", list.indexOf(1))
+                    .isEqualTo(-1);
         }
 
         @Test
@@ -971,8 +883,8 @@ class SinglyLinkedListTest {
             list.addLast(1);
 
             assertThat(list.indexOf(1))
-                .as("Expected indexOf(1) to return 0 (first occurrence), but got %d", list.indexOf(1))
-                .isEqualTo(0);
+                    .as("Expected indexOf(1) to return 0 (first occurrence), but got %d", list.indexOf(1))
+                    .isEqualTo(0);
         }
 
         @Test
@@ -984,8 +896,8 @@ class SinglyLinkedListTest {
             stringList.addLast("b");
 
             assertThat(stringList.indexOf(null))
-                .as("Expected indexOf(null) to return 1, but got %d", stringList.indexOf(null))
-                .isEqualTo(1);
+                    .as("Expected indexOf(null) to return 1, but got %d", stringList.indexOf(null))
+                    .isEqualTo(1);
         }
     }
 
@@ -997,8 +909,8 @@ class SinglyLinkedListTest {
         @DisplayName("returns proper representation for empty list")
         void returnsProperRepresentationForEmptyList() {
             assertThat(list.toString())
-                .as("Expected toString() for empty list to be '[]', but got '%s'", list.toString())
-                .isEqualTo("[]");
+                    .as("Expected toString() for empty list to be '[]', but got '%s'", list.toString())
+                    .isEqualTo("[]");
         }
 
         @Test
@@ -1007,8 +919,8 @@ class SinglyLinkedListTest {
             list.addFirst(1);
 
             assertThat(list.toString())
-                .as("Expected toString() for [1] to be '[1]', but got '%s'", list.toString())
-                .isEqualTo("[1]");
+                    .as("Expected toString() for [1] to be '[1]', but got '%s'", list.toString())
+                    .isEqualTo("[1]");
         }
 
         @Test
@@ -1019,8 +931,8 @@ class SinglyLinkedListTest {
             list.addLast(3);
 
             assertThat(list.toString())
-                .as("Expected toString() for [1, 2, 3] to be '[1, 2, 3]', but got '%s'", list.toString())
-                .isEqualTo("[1, 2, 3]");
+                    .as("Expected toString() for [1, 2, 3] to be '[1, 2, 3]', but got '%s'", list.toString())
+                    .isEqualTo("[1, 2, 3]");
         }
 
         @Test
@@ -1032,8 +944,8 @@ class SinglyLinkedListTest {
             stringList.addLast("b");
 
             assertThat(stringList.toString())
-                .as("Expected toString() to be '[a, null, b]', but got '%s'", stringList.toString())
-                .isEqualTo("[a, null, b]");
+                    .as("Expected toString() to be '[a, null, b]', but got '%s'", stringList.toString())
+                    .isEqualTo("[a, null, b]");
         }
     }
 
@@ -1047,8 +959,8 @@ class SinglyLinkedListTest {
             list.addFirst(Integer.MAX_VALUE);
 
             assertThat(list.getFirst())
-                .as("Expected getFirst() to return Integer.MAX_VALUE, but got %s", list.getFirst())
-                .isEqualTo(Integer.MAX_VALUE);
+                    .as("Expected getFirst() to return Integer.MAX_VALUE, but got %s", list.getFirst())
+                    .isEqualTo(Integer.MAX_VALUE);
         }
 
         @Test
@@ -1057,8 +969,8 @@ class SinglyLinkedListTest {
             list.addFirst(Integer.MIN_VALUE);
 
             assertThat(list.getFirst())
-                .as("Expected getFirst() to return Integer.MIN_VALUE, but got %s", list.getFirst())
-                .isEqualTo(Integer.MIN_VALUE);
+                    .as("Expected getFirst() to return Integer.MIN_VALUE, but got %s", list.getFirst())
+                    .isEqualTo(Integer.MIN_VALUE);
         }
 
         @Test
@@ -1069,22 +981,21 @@ class SinglyLinkedListTest {
             }
 
             assertThat(list.size())
-                .as("Expected size to be 1000 after adding 1000 elements, but got %d", list.size())
-                .isEqualTo(1000);
+                    .as("Expected size to be 1000 after adding 1000 elements, but got %d", list.size())
+                    .isEqualTo(1000);
 
             for (int i = 0; i < 500; i++) {
                 list.removeFirst();
             }
 
             assertThat(list.size())
-                .as("Expected size to be 500 after removing 500 elements, but got %d", list.size())
-                .isEqualTo(500);
+                    .as("Expected size to be 500 after removing 500 elements, but got %d", list.size())
+                    .isEqualTo(500);
 
             assertThat(list.getFirst())
-                .as("Expected getFirst() to return 500 after operations, but got %s", list.getFirst())
-                .isEqualTo(500);
+                    .as("Expected getFirst() to return 500 after operations, but got %s", list.getFirst())
+                    .isEqualTo(500);
         }
-
 
 
         @Test
@@ -1095,13 +1006,12 @@ class SinglyLinkedListTest {
             list.addLast(1);
 
             assertThat(list.size())
-                .as("Expected size to be 3 with duplicate elements, but got %d", list.size())
-                .isEqualTo(3);
+                    .as("Expected size to be 3 with duplicate elements, but got %d", list.size())
+                    .isEqualTo(3);
             assertThat(list.indexOf(1))
-                .as("Expected indexOf(1) to return 0 (first occurrence), but got %d", list.indexOf(1))
-                .isEqualTo(0);
+                    .as("Expected indexOf(1) to return 0 (first occurrence), but got %d", list.indexOf(1))
+                    .isEqualTo(0);
         }
-
 
 
         @Test
@@ -1116,8 +1026,8 @@ class SinglyLinkedListTest {
             list.removeFirst();
 
             assertThat(list.isEmpty())
-                .as("Expected list to be empty after removing all elements from front, but isEmpty() returned false")
-                .isTrue();
+                    .as("Expected list to be empty after removing all elements from front, but isEmpty() returned false")
+                    .isTrue();
         }
 
         @Test
@@ -1132,18 +1042,9 @@ class SinglyLinkedListTest {
             list.removeLast();
 
             assertThat(list.isEmpty())
-                .as("Expected list to be empty after removing all elements from back, but isEmpty() returned false")
-                .isTrue();
+                    .as("Expected list to be empty after removing all elements from back, but isEmpty() returned false")
+                    .isTrue();
         }
-
-
-
-
-
-
-
-
-
 
 
         @Test
@@ -1153,11 +1054,11 @@ class SinglyLinkedListTest {
             list.removeFirst();
 
             assertThatThrownBy(() -> list.removeFirst())
-                .as("Second removeFirst on empty list should throw")
-                .isInstanceOf(java.util.NoSuchElementException.class);
+                    .as("Second removeFirst on empty list should throw")
+                    .isInstanceOf(java.util.NoSuchElementException.class);
             assertThatThrownBy(() -> list.removeLast())
-                .as("removeLast on empty list should throw")
-                .isInstanceOf(java.util.NoSuchElementException.class);
+                    .as("removeLast on empty list should throw")
+                    .isInstanceOf(java.util.NoSuchElementException.class);
         }
 
         @Test
@@ -1171,25 +1072,12 @@ class SinglyLinkedListTest {
             list.removeLast();
 
             assertThat(list.indexOf(2))
-                .as("Expected indexOf(2) to be 0 after removes, but got %d", list.indexOf(2))
-                .isEqualTo(0);
+                    .as("Expected indexOf(2) to be 0 after removes, but got %d", list.indexOf(2))
+                    .isEqualTo(0);
             assertThat(list.indexOf(3))
-                .as("Expected indexOf(3) to be 1 after removes, but got %d", list.indexOf(3))
-                .isEqualTo(1);
+                    .as("Expected indexOf(3) to be 1 after removes, but got %d", list.indexOf(3))
+                    .isEqualTo(1);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         @Test
@@ -1200,16 +1088,15 @@ class SinglyLinkedListTest {
             list.addLast(0);
 
             assertThat(list.getFirst())
-                .as("First should be MIN_VALUE")
-                .isEqualTo(Integer.MIN_VALUE);
+                    .as("First should be MIN_VALUE")
+                    .isEqualTo(Integer.MIN_VALUE);
             assertThat(list.get(1))
-                .as("Middle should be MAX_VALUE")
-                .isEqualTo(Integer.MAX_VALUE);
+                    .as("Middle should be MAX_VALUE")
+                    .isEqualTo(Integer.MAX_VALUE);
             assertThat(list.getLast())
-                .as("Last should be 0")
-                .isZero();
+                    .as("Last should be 0")
+                    .isZero();
         }
-
 
 
         @Test
@@ -1222,11 +1109,11 @@ class SinglyLinkedListTest {
             String str = list.toString();
 
             assertThat(str)
-                .as("toString should start with [").startsWith("[");
+                    .as("toString should start with [").startsWith("[");
             assertThat(str)
-                .as("toString should end with ]").endsWith("]");
+                    .as("toString should end with ]").endsWith("]");
             assertThat(str)
-                .as("toString should contain commas").contains(",");
+                    .as("toString should contain commas").contains(",");
         }
     }
 }
