@@ -58,8 +58,8 @@
 //            list.addLast(3);
 //            assertThat(list.size()).as("Expected size 3 after three adds but got %d", list.size()).isEqualTo(3);
 //
-//            list.removeFirst();
-//            list.removeLast();
+//            list.deleteFirst();
+//            list.deleteLast();
 //            assertThat(list.size()).as("Expected size 1 after two removals but got %d", list.size()).isEqualTo(1);
 //        }
 //    }
@@ -99,13 +99,13 @@
 //    }
 //
 //    @Nested
-//    @DisplayName("insertAt()")
-//    class InsertAtTests {
+//    @DisplayName("addAt()")
+//    class addAtTests {
 //
 //        @Test
 //        @DisplayName("inserts at index 0 into empty list")
 //        void insertsAtZeroIntoEmpty() {
-//            list.insertAt(0, 10);
+//            list.addAt(0, 10);
 //            assertThat(list.getFirst()).isEqualTo(10);
 //            assertThat(list.size()).isEqualTo(1);
 //        }
@@ -115,9 +115,9 @@
 //        void insertsVariousPositions() {
 //            list.addLast(1);
 //            list.addLast(3);
-//            list.insertAt(1, 2);
-//            list.insertAt(0, 0);
-//            list.insertAt(4, 4);
+//            list.addAt(1, 2);
+//            list.addAt(0, 0);
+//            list.addAt(4, 4);
 //            assertThat(list.size()).isEqualTo(5);
 //            assertThat(list.get(0)).isEqualTo(0);
 //            assertThat(list.get(1)).isEqualTo(1);
@@ -129,14 +129,14 @@
 //        @Test
 //        @DisplayName("throws for negative index")
 //        void throwsForNegativeIndex() {
-//            assertThatThrownBy(() -> list.insertAt(-1, 5)).as("insertAt(-1) should throw IndexOutOfBoundsException").isInstanceOf(IndexOutOfBoundsException.class);
+//            assertThatThrownBy(() -> list.addAt(-1, 5)).as("addAt(-1) should throw IndexOutOfBoundsException").isInstanceOf(IndexOutOfBoundsException.class);
 //        }
 //
 //        @Test
 //        @DisplayName("throws for index greater than size")
 //        void throwsForIndexGreaterThanSize() {
 //            list.addLast(1);
-//            assertThatThrownBy(() -> list.insertAt(3, 5)).as("insertAt(3) when size 1 should throw IndexOutOfBoundsException").isInstanceOf(IndexOutOfBoundsException.class);
+//            assertThatThrownBy(() -> list.addAt(3, 5)).as("addAt(3) when size 1 should throw IndexOutOfBoundsException").isInstanceOf(IndexOutOfBoundsException.class);
 //        }
 //    }
 //
@@ -223,39 +223,39 @@
 //    }
 //
 //    @Nested
-//    @DisplayName("removeFirst()/removeLast()/removeAt()")
+//    @DisplayName("deleteFirst()/deleteLast()/deleteAt()")
 //    class RemoveTests {
 //
 //        @Test
-//        @DisplayName("removeFirst removes head and returns value")
-//        void removeFirstRemovesHead() {
+//        @DisplayName("deleteFirst removes head and returns value")
+//        void deleteFirstRemovesHead() {
 //            list.addLast(1);
 //            list.addLast(2);
-//            Integer removed = list.removeFirst();
-//            assertThat(removed).as("Expected removeFirst to return 1 but got %s", removed).isEqualTo(1);
+//            Integer removed = list.deleteFirst();
+//            assertThat(removed).as("Expected deleteFirst to return 1 but got %s", removed).isEqualTo(1);
 //            assertThat(list.getFirst()).as("New head should be 2 after removing first").isEqualTo(2);
-//            assertThat(list.size()).as("Size should be 1 after removeFirst").isEqualTo(1);
+//            assertThat(list.size()).as("Size should be 1 after deleteFirst").isEqualTo(1);
 //        }
 //
 //        @Test
-//        @DisplayName("removeLast removes tail and returns value")
-//        void removeLastRemovesTail() {
+//        @DisplayName("deleteLast removes tail and returns value")
+//        void deleteLastRemovesTail() {
 //            list.addLast(1);
 //            list.addLast(2);
-//            Integer removed = list.removeLast();
-//            assertThat(removed).as("Expected removeLast to return 2 but got %s", removed).isEqualTo(2);
+//            Integer removed = list.deleteLast();
+//            assertThat(removed).as("Expected deleteLast to return 2 but got %s", removed).isEqualTo(2);
 //            assertThat(list.getLast()).as("New tail should be 1 after removing last").isEqualTo(1);
-//            assertThat(list.size()).as("Size should be 1 after removeLast").isEqualTo(1);
+//            assertThat(list.size()).as("Size should be 1 after deleteLast").isEqualTo(1);
 //        }
 //
 //        @Test
-//        @DisplayName("removeAt removes value at index")
-//        void removeAtRemovesValue() {
+//        @DisplayName("deleteAt removes value at index")
+//        void deleteAtRemovesValue() {
 //            list.addLast(1);
 //            list.addLast(2);
 //            list.addLast(3);
-//            Integer removed = list.removeAt(1);
-//            assertThat(removed).as("Expected removeAt(1) to return 2 but got %s", removed).isEqualTo(2);
+//            Integer removed = list.deleteAt(1);
+//            assertThat(removed).as("Expected deleteAt(1) to return 2 but got %s", removed).isEqualTo(2);
 //            assertThat(list.size()).isEqualTo(2);
 //            assertThat(list.get(0)).isEqualTo(1);
 //            assertThat(list.get(1)).isEqualTo(3);
@@ -264,30 +264,30 @@
 //        @Test
 //        @DisplayName("remove operations throw on empty list")
 //        void removeThrowsOnEmpty() {
-//            assertThatThrownBy(() -> list.removeFirst()).as("removeFirst on empty should throw NoSuchElementException").isInstanceOf(java.util.NoSuchElementException.class);
-//            assertThatThrownBy(() -> list.removeLast()).as("removeLast on empty should throw NoSuchElementException").isInstanceOf(java.util.NoSuchElementException.class);
-//            assertThatThrownBy(() -> list.removeAt(0)).as("removeAt on empty should throw IndexOutOfBoundsException").isInstanceOf(IndexOutOfBoundsException.class);
+//            assertThatThrownBy(() -> list.deleteFirst()).as("deleteFirst on empty should throw NoSuchElementException").isInstanceOf(java.util.NoSuchElementException.class);
+//            assertThatThrownBy(() -> list.deleteLast()).as("deleteLast on empty should throw NoSuchElementException").isInstanceOf(java.util.NoSuchElementException.class);
+//            assertThatThrownBy(() -> list.deleteAt(0)).as("deleteAt on empty should throw IndexOutOfBoundsException").isInstanceOf(IndexOutOfBoundsException.class);
 //        }
 //
 //        @Test
-//        @DisplayName("removeAt invalid indices throw")
-//        void removeAtInvalidIndicesThrow() {
+//        @DisplayName("deleteAt invalid indices throw")
+//        void deleteAtInvalidIndicesThrow() {
 //            list.addLast(1);
-//            assertThatThrownBy(() -> list.removeAt(-1)).as("removeAt(-1) should throw IndexOutOfBoundsException").isInstanceOf(IndexOutOfBoundsException.class);
-//            assertThatThrownBy(() -> list.removeAt(2)).as("removeAt(2) with size 1 should throw IndexOutOfBoundsException").isInstanceOf(IndexOutOfBoundsException.class);
+//            assertThatThrownBy(() -> list.deleteAt(-1)).as("deleteAt(-1) should throw IndexOutOfBoundsException").isInstanceOf(IndexOutOfBoundsException.class);
+//            assertThatThrownBy(() -> list.deleteAt(2)).as("deleteAt(2) with size 1 should throw IndexOutOfBoundsException").isInstanceOf(IndexOutOfBoundsException.class);
 //        }
 //
 //        @Test
-//        @DisplayName("removeFirst/Last make list empty when single element")
+//        @DisplayName("deleteFirst/Last make list empty when single element")
 //        void removeMakesListEmpty() {
 //            list.addLast(42);
-//            Integer first = list.removeFirst();
-//            assertThat(first).as("removeFirst should return 42 for single element").isEqualTo(42);
+//            Integer first = list.deleteFirst();
+//            assertThat(first).as("deleteFirst should return 42 for single element").isEqualTo(42);
 //            assertThat(list.isEmpty()).as("List should be empty after removing only element").isTrue();
 //
 //            list.addLast(99);
-//            Integer last = list.removeLast();
-//            assertThat(last).as("removeLast should return 99 for single element").isEqualTo(99);
+//            Integer last = list.deleteLast();
+//            assertThat(last).as("deleteLast should return 99 for single element").isEqualTo(99);
 //            assertThat(list.isEmpty()).as("List should be empty after removing only element").isTrue();
 //        }
 //    }
@@ -302,7 +302,7 @@
 //            list.addLast(1);
 //            list.addLast(2);
 //            list.addLast(1);
-//            boolean removed = list.remove(1);
+//            boolean removed = list.delete(1);
 //            assertThat(removed).as("remove(1) should return true when element exists").isTrue();
 //            assertThat(list.size()).isEqualTo(2);
 //            assertThat(list.get(0)).isEqualTo(2);
@@ -313,7 +313,7 @@
 //        @DisplayName("returns false when value not found")
 //        void returnsFalseWhenNotFound() {
 //            list.addLast(1);
-//            boolean removed = list.remove(99);
+//            boolean removed = list.delete(99);
 //            assertThat(removed).as("remove on missing element should return false").isFalse();
 //        }
 //
@@ -324,7 +324,7 @@
 //            stringList.addLast("a");
 //            stringList.addLast(null);
 //            stringList.addLast("b");
-//            boolean removed = stringList.remove(null);
+//            boolean removed = stringList.delete(null);
 //            assertThat(removed).as("remove(null) should return true when present").isTrue();
 //            assertThat(stringList.size()).isEqualTo(2);
 //            assertThat(stringList.get(0)).isEqualTo("a");
@@ -417,13 +417,13 @@
 //            assertThat(list.size()).as("Expected size 1000 after bulk add but got %d", list.size()).isEqualTo(1000);
 //
 //            for (int i = 0; i < 500; i++) {
-//                list.removeFirst();
+//                list.deleteFirst();
 //            }
 //            assertThat(list.getFirst()).as("Head after removing 500 should be 500 but got %s", list.getFirst()).isEqualTo(500);
 //            assertThat(list.size()).as("Size should be 500 after removing 500 elements").isEqualTo(500);
 //
 //            for (int i = 0; i < 500; i++) {
-//                list.removeLast();
+//                list.deleteLast();
 //            }
 //            assertThat(list.isEmpty()).as("List should be empty after removing all elements").isTrue();
 //        }
@@ -431,12 +431,12 @@
 //        @Test
 //        @DisplayName("interleaved insert and removal at various positions")
 //        void interleavedOps() {
-//            list.insertAt(0, 1);
-//            list.insertAt(1, 3);
-//            list.insertAt(1, 2);
-//            list.removeAt(0);
-//            list.removeAt(1);
-//            list.insertAt(1, 4);
+//            list.addAt(0, 1);
+//            list.addAt(1, 3);
+//            list.addAt(1, 2);
+//            list.deleteAt(0);
+//            list.deleteAt(1);
+//            list.addAt(1, 4);
 //            assertThat(list.size()).isEqualTo(2);
 //            assertThat(list.get(0)).isEqualTo(2);
 //            assertThat(list.get(1)).isEqualTo(4);
@@ -451,8 +451,8 @@
 //            }
 //
 //            for (int i = 0; i < 5; i++) {
-//                list.removeFirst();
-//                list.removeLast();
+//                list.deleteFirst();
+//                list.deleteLast();
 //            }
 //
 //            assertThat(list.size())
@@ -557,10 +557,10 @@
 //                list.addLast(i);
 //            }
 //
-//            list.removeFirst();
-//            list.removeFirst();
-//            list.removeLast();
-//            list.removeLast();
+//            list.deleteFirst();
+//            list.deleteFirst();
+//            list.deleteLast();
+//            list.deleteLast();
 //
 //            assertThat(list.getFirst()).as("First after removals").isEqualTo(2);
 //            assertThat(list.getLast()).as("Last after removals").isEqualTo(7);
@@ -592,7 +592,7 @@
 //            list.addLast(1);
 //            list.addLast(2);
 //            list.addLast(3);
-//            list.removeFirst();
+//            list.deleteFirst();
 //            list.addFirst(0);
 //
 //            Iterator<Integer> it = list.descendingIterator();
@@ -608,8 +608,8 @@
 //        void toStringAfterComplexOps() {
 //            list.addLast(1);
 //            list.addFirst(0);
-//            list.insertAt(1, 99);
-//            list.remove(99);
+//            list.addAt(1, 99);
+//            list.delete(99);
 //
 //            String str = list.toString();
 //
@@ -624,7 +624,7 @@
 //            list.addLast(1);
 //            assertThat(list.size()).as("After add").isGreaterThanOrEqualTo(0);
 //
-//            list.removeFirst();
+//            list.deleteFirst();
 //            assertThat(list.size()).as("After remove").isGreaterThanOrEqualTo(0);
 //        }
 //
@@ -633,7 +633,7 @@
 //        void boundaryValuesIntegerMaxMin() {
 //            list.addLast(Integer.MAX_VALUE);
 //            list.addFirst(Integer.MIN_VALUE);
-//            list.insertAt(1, 0);
+//            list.addAt(1, 0);
 //
 //            assertThat(list.get(0)).as("MIN_VALUE at head").isEqualTo(Integer.MIN_VALUE);
 //            assertThat(list.get(1)).as("0 at middle").isZero();

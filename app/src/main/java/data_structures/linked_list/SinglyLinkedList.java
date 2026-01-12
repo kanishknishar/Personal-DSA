@@ -4,7 +4,7 @@ public class SinglyLinkedList<T> {
     private Node<T> head;
     public int size;
 
-    public void insertAt(int index, T value) {
+    public void addAt(int index, T value) {
         if (isEmpty()) {
             addFirst(value);
             return;
@@ -44,10 +44,10 @@ public class SinglyLinkedList<T> {
             addFirst(value);
         }
 
-        insertAt(size, value);
+        addAt(size, value);
     }
 
-    public T removeAt(int index) {
+    public T deleteAt(int index) {
         if (index < 0 || index >= size) {
             throw new ArrayIndexOutOfBoundsException("List is empty - operation failed.");
         }
@@ -65,20 +65,20 @@ public class SinglyLinkedList<T> {
         return deletedNode.value;
     }
 
-    public T removeFirst() {
+    public T deleteFirst() {
         if (isEmpty()) {
             throw new ArrayIndexOutOfBoundsException("List is empty - operation failed.");
         }
 
-        return removeAt(0);
+        return deleteAt(0);
     }
 
-    public T removeLast() {
+    public T deleteLast() {
         if (isEmpty()) {
             throw new ArrayIndexOutOfBoundsException("List is empty - operation failed.");
         }
 
-        return removeAt(size - 1);
+        return deleteAt(size - 1);
     }
 
     public T getFirst() {

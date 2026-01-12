@@ -437,17 +437,6 @@
 //        }
 //
 //        @Test
-//        @DisplayName("Should handle multiple clear operations")
-//        void testMultipleClear() {
-//            linkedQueue.enqueue(1);
-//            linkedQueue.clear();
-//            linkedQueue.clear(); // Clear already empty
-//            linkedQueue.enqueue(2);
-//            linkedQueue.clear();
-//            assertTrue(linkedQueue.isEmpty());
-//        }
-//
-//        @Test
 //        @DisplayName("Should handle rapid enqueue/dequeue cycles")
 //        void testRapidCycles() {
 //            for (int cycle = 0; cycle < 100; cycle++) {

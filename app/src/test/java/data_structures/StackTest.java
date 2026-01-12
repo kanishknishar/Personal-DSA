@@ -142,40 +142,6 @@
 //    }
 //
 //    @Nested
-//    @DisplayName("Clear Operations Tests")
-//    class ClearOperationsTests {
-//
-//        @Test
-//        @DisplayName("Should clear empty stack")
-//        void testClearEmptyStack() {
-//            stack.clear();
-//            assertTrue(stack.isEmpty());
-//            assertEquals(0, stack.size());
-//        }
-//
-//        @Test
-//        @DisplayName("Should clear stack with elements")
-//        void testClearNonEmptyStack() {
-//            stack.push(1);
-//            stack.push(2);
-//            stack.push(3);
-//            stack.clear();
-//            assertTrue(stack.isEmpty());
-//            assertEquals(0, stack.size());
-//        }
-//
-//        @Test
-//        @DisplayName("Should allow operations after clear")
-//        void testOperationsAfterClear() {
-//            stack.push(1);
-//            stack.clear();
-//            stack.push(2);
-//            assertEquals(2, stack.peek());
-//            assertEquals(1, stack.size());
-//        }
-//    }
-//
-//    @Nested
 //    @DisplayName("Search Operations Tests")
 //    class SearchOperationsTests {
 //

@@ -10,23 +10,23 @@ public class DoublyLinkedList<T> {
         throw new UnsupportedOperationException("Not implemented");
     }
 
-    public void insertAt(int index, T value) {
+    public void addAt(int index, T value) {
         throw new UnsupportedOperationException("Not implemented");
     }
     // To-do
-    public T removeFirst() {
+    public T deleteFirst() {
         throw new UnsupportedOperationException("Not implemented");
     }
     // To-do
-    public T removeLast() {
+    public T deleteLast() {
         throw new UnsupportedOperationException("Not implemented");
     }
 
-    public T removeAt(int index) {
+    public T deleteAt(int index) {
         throw new UnsupportedOperationException("Not implemented");
     }
 
-    public boolean remove(T value) {
+    public boolean delete(T value) {
         throw new UnsupportedOperationException("Not implemented");
     }
 
