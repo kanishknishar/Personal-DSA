@@ -1,5 +1,7 @@
 package data_structures.linked_list;
 
+import java.util.NoSuchElementException;
+
 public class SinglyLinkedList<T> {
     private Node<T> head;
     public int size;
@@ -61,22 +63,34 @@ public class SinglyLinkedList<T> {
             throw new ArrayIndexOutOfBoundsException("List is empty - operation failed.");
         }
 
-        var curr = head;
+        Node<T> curr = head;
+
+        if (index == 0) {
+            var deletedValue = curr.value;
+            head = curr.next;
+            size--;
+            return deletedValue;
+        }
 
         for (int i = 0; i < index - 1; i++) {
+            System.out.println("Loop number: " + i);
+            System.out.println("Current value before reassignment: " + curr.value);
+
             curr = curr.next;
+
+            System.out.println("Reassigned curr to: " + curr.value);
         }
 
         Node<T> deletedNode = curr.next;
+        curr.next = curr.next.next;
 
-        curr.next = null;
-
+        size--;
         return deletedNode.value;
     }
 
     public T deleteFirst() {
         if (isEmpty()) {
-            throw new ArrayIndexOutOfBoundsException("List is empty - operation failed.");
+            throw new NoSuchElementException("List is empty - operation failed.");
         }
 
         return deleteAt(0);
@@ -84,31 +98,28 @@ public class SinglyLinkedList<T> {
 
     public T deleteLast() {
         if (isEmpty()) {
-            throw new ArrayIndexOutOfBoundsException("List is empty - operation failed.");
+            throw new NoSuchElementException("List is empty - operation failed.");
         }
 
         return deleteAt(size - 1);
     }
 
     public T get(int index) {
-        if (index < 0 || index > size) {
-            throw new ArrayIndexOutOfBoundsException();
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
         }
 
+        return getNode(index).value;
+    }
+
+    private Node<T> getNode(int index) {
         var curr = head;
-
-        // element 3 - index 2 --
-
-        // 0 - head
-        // for 0 - head.next == element 1
-        // for 1 - element 1.next - element 2
-        // for 2 - <2>.next -- element 3
 
         for (int i = 0; i < index; i++) {
             curr = curr.next;
         }
 
-        return curr.value;
+        return curr;
     }
 
     public T getFirst() {
@@ -120,7 +131,12 @@ public class SinglyLinkedList<T> {
     }
 
     public void set(int index, T value) {
-        throw new UnsupportedOperationException("Not implemented");
+        if (index >= size || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        getNode(index).value = value;
+
     }
 
     public int indexOf(T value) {
@@ -137,7 +153,23 @@ public class SinglyLinkedList<T> {
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not implemented");
+        if (head == null) {
+            return "[]";
+        }
+
+        Node<T> curr = head;
+
+        var sb = new StringBuilder("[").append(head.value);
+        var count = 1;
+
+        while (curr.next != null) {
+            System.out.println("Loop iteration: " + count++);
+            sb.append(curr.value).append(" -> ");
+        }
+
+        sb.append("]");
+
+        return sb.toString();
     }
 
     private static class Node<T> {
@@ -155,10 +187,7 @@ public class SinglyLinkedList<T> {
 
         @Override
         public String toString() {
-            return "Node - {" +
-                    "value = " + value +
-                    ", next = " + next +
-                    '}';
+            return value + " -> ";
         }
     }
 }
