@@ -1,5 +1,16 @@
-# Ignore Gradle project-specific cache directory
-.gradle
+# Gradle
+/.gradle/
+/build/
+/out/
+**/build/
 
-# Ignore Gradle build output directory
-build
+# Common compiled output
+**/bin/
+*/bin/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated docs (optional; build/ already covers it)
+build/docs/

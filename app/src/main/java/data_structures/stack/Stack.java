@@ -1,9 +1,16 @@
 package data_structures.stack;
 
 public interface Stack<T> {
-    public void push(T element);
-    public T pop();
-    public T peek();
-    public int size();
-    public boolean isEmpty();
+
+	void push(T value);
+
+	T pop();
+
+	T peek();
+
+	int size();
+
+	boolean isEmpty();
+
+	int search(T value);
 }

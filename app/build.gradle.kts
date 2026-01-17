@@ -16,28 +16,22 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
-
-    // Use AssertJ for fluent assertions.
-    testImplementation(libs.assertj.core)
-
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    // This dependency is used by the application.
+    testImplementation(libs.assertj)
+    testRuntimeOnly(libs.junit.platform.launcher)
     implementation(libs.guava)
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
 application {
     // Define the main class for the application.
-    mainClass = "data_structures_and_algorithms.App"
+    mainClass = "personal.App"
 }
 
 tasks.named<Test>("test") {
