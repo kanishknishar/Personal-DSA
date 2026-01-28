@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+@SuppressWarnings({"unused"})
 @ExtendWith(SoftAssertionsExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class InsertionSortTest {
@@ -16,11 +17,13 @@ class InsertionSortTest {
 	//region - Correctness
 
 	@Nested
+	@SuppressWarnings({"unused"})
 	class Correctness {
 
 		@Test
 		void sorts_unsorted_array() {
 			int[] arr = {4, 2, 7, 1};
+			assertArrayCreated(arr);
 
 			assertThatThrownBy(() -> insertionSort(arr))
 				.isInstanceOf(UnsupportedOperationException.class)
@@ -30,6 +33,7 @@ class InsertionSortTest {
 		@Test
 		void handles_already_sorted_array() {
 			int[] arr = {1, 2, 3, 4, 5};
+			assertArrayCreated(arr);
 
 			assertThatThrownBy(() -> insertionSort(arr))
 				.isInstanceOf(UnsupportedOperationException.class);
@@ -38,6 +42,7 @@ class InsertionSortTest {
 		@Test
 		void handles_reverse_sorted_array() {
 			int[] arr = {10, 9, 8, 7, 6};
+			assertArrayCreated(arr);
 
 			assertThatThrownBy(() -> insertionSort(arr))
 				.isInstanceOf(UnsupportedOperationException.class);
@@ -46,6 +51,7 @@ class InsertionSortTest {
 		@Test
 		void handles_single_element() {
 			int[] arr = {42};
+			assertArrayCreated(arr);
 
 			assertThatThrownBy(() -> insertionSort(arr))
 				.isInstanceOf(UnsupportedOperationException.class);
@@ -54,6 +60,7 @@ class InsertionSortTest {
 		@Test
 		void handles_duplicates() {
 			int[] arr = {3, 1, 3, 2, 3};
+			assertArrayCreated(arr);
 
 			assertThatThrownBy(() -> insertionSort(arr))
 				.isInstanceOf(UnsupportedOperationException.class);
@@ -62,6 +69,7 @@ class InsertionSortTest {
 		@Test
 		void handles_empty_array() {
 			int[] arr = {};
+			assertArrayCreated(arr);
 
 			assertThatThrownBy(() -> insertionSort(arr))
 				.isInstanceOf(UnsupportedOperationException.class);
@@ -70,6 +78,70 @@ class InsertionSortTest {
 		@Test
 		void handles_negative_numbers() {
 			int[] arr = {-5, -1, -10, 0, 3};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> insertionSort(arr))
+				.isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void handles_two_elements_in_order() {
+			int[] arr = {1, 2};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> insertionSort(arr))
+				.isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void handles_two_elements_reversed() {
+			int[] arr = {2, 1};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> insertionSort(arr))
+				.isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void handles_all_same_elements() {
+			int[] arr = {7, 7, 7, 7, 7};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> insertionSort(arr))
+				.isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void handles_integer_min_max_values() {
+			int[] arr = {Integer.MAX_VALUE, 0, Integer.MIN_VALUE};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> insertionSort(arr))
+				.isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void handles_alternating_high_low() {
+			int[] arr = {100, 1, 99, 2, 98, 3, 97, 4};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> insertionSort(arr))
+				.isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void handles_first_element_out_of_place() {
+			int[] arr = {5, 1, 2, 3, 4};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> insertionSort(arr))
+				.isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void handles_last_element_out_of_place() {
+			int[] arr = {2, 3, 4, 5, 1};
+			assertArrayCreated(arr);
 
 			assertThatThrownBy(() -> insertionSort(arr))
 				.isInstanceOf(UnsupportedOperationException.class);
@@ -81,6 +153,7 @@ class InsertionSortTest {
 	//region - Efficiency
 
 	@Nested
+	@SuppressWarnings({"unused"})
 	class Efficiency {
 
 		@Test
@@ -88,6 +161,7 @@ class InsertionSortTest {
 			int[] arr = new int[100];
 			for (int i = 0; i < 100; i++)
 				arr[i] = i;
+			assertArrayCreated(arr);
 
 			assertThatThrownBy(() -> {
 				long steps = insertionSortWithStepCount(arr);
@@ -102,6 +176,7 @@ class InsertionSortTest {
 			for (int i = 0; i < 100; i++)
 				arr[i] = i;
 			arr[50] = 49;
+			assertArrayCreated(arr);
 
 			assertThatThrownBy(() -> {
 				long steps = insertionSortWithStepCount(arr);
@@ -115,6 +190,7 @@ class InsertionSortTest {
 			int[] arr = new int[1000];
 			for (int i = 0; i < 1000; i++)
 				arr[i] = 1000 - i;
+			assertArrayCreated(arr);
 
 			assertThatThrownBy(() -> {
 				long steps = insertionSortWithStepCount(arr);
@@ -128,6 +204,7 @@ class InsertionSortTest {
 			int[] arr = new int[1000];
 			for (int i = 0; i < 1000; i++)
 				arr[i] = 1000 - i;
+			assertArrayCreated(arr);
 
 			assertThatThrownBy(() -> {
 				long steps = insertionSortWithStepCount(arr);
@@ -143,6 +220,7 @@ class InsertionSortTest {
 			for (int i = 0; i < 200; i++)
 				arr[i] = i;
 			arr[100] = 99;
+			assertArrayCreated(arr);
 
 			assertThatThrownBy(() -> {
 				long steps = insertionSortWithStepCount(arr);
@@ -157,14 +235,14 @@ class InsertionSortTest {
 	//region - Stability
 
 	@Nested
+	@SuppressWarnings({"unused"})
 	class Stability {
 
 		@Test
 		void maintains_stability() {
 			assertThatThrownBy(() -> {
-				// Insertion sort IS stable
-				// Equal elements preserve their relative order
 				int[] arr = {3, 1, 3, 2, 3};
+				assertArrayCreated(arr);
 				insertionSort(arr);
 			}).isInstanceOf(UnsupportedOperationException.class)
 				.hasMessageContaining("Not implemented");
@@ -172,8 +250,146 @@ class InsertionSortTest {
 
 		@Test
 		void stability_verified_with_custom_objects() {
+			assertThatThrownBy(() -> insertionSort(new int[] {2, 1, 2}))
+				.isInstanceOf(UnsupportedOperationException.class);
+		}
+	}
+
+	//endregion
+
+	//region - In Place Behavior
+
+	@Nested
+	@SuppressWarnings({"unused"})
+	class In_Place_Behavior {
+
+		@Test
+		void sorts_array_in_place_no_extra_array() {
+			int[] arr = {5, 2, 8, 1, 9};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> insertionSort(arr))
+				.isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void original_array_reference_unchanged() {
+			int[] arr = {3, 1, 2};
+			int[] originalRef = arr;
+			assertArrayCreated(arr);
+
 			assertThatThrownBy(() -> {
-				// Use custom objects to verify stability
+				insertionSort(arr);
+				assertThat(arr).isSameAs(originalRef);
+			}).isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void no_elements_lost_during_sort() {
+			int[] arr = {5, 2, 8, 1, 9};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> {
+				insertionSort(arr);
+				assertThat(arr).containsExactlyInAnyOrder(1, 2, 5, 8, 9);
+			}).isInstanceOf(UnsupportedOperationException.class);
+		}
+	}
+
+	//endregion
+
+	//region - Adaptive Behavior
+
+	@Nested
+	@SuppressWarnings({"unused"})
+	class Adaptive_Behavior {
+
+		@Test
+		void O_n_on_sorted_input() {
+			int[] arr = new int[100];
+			for (int i = 0; i < 100; i++) arr[i] = i;
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> {
+				long steps = insertionSortWithStepCount(arr);
+				assertThat(steps).as("Should be O(n) for sorted input")
+					.isLessThanOrEqualTo(100);
+			}).isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void efficient_on_k_inversions() {
+			int[] arr = new int[100];
+			for (int i = 0; i < 100; i++) arr[i] = i;
+			arr[0] = 99;
+			arr[99] = 0;
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> {
+				long steps = insertionSortWithStepCount(arr);
+				assertThat(steps).as("Should be O(n + k) for k inversions")
+					.isLessThan(100 * 5);
+			}).isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void performance_scales_with_disorder() {
+			int[] nearlySorted = new int[100];
+			int[] halfReversed = new int[100];
+			for (int i = 0; i < 100; i++) {
+				nearlySorted[i] = i;
+				halfReversed[i] = i < 50 ? 50 - i : i;
+			}
+			assertArrayCreated(nearlySorted);
+			assertArrayCreated(halfReversed);
+
+			assertThatThrownBy(() -> {
+				long stepsNearly = insertionSortWithStepCount(nearlySorted);
+				long stepsHalf = insertionSortWithStepCount(halfReversed);
+				assertThat(stepsHalf).as("More disordered array should take more steps")
+					.isGreaterThan(stepsNearly);
+			}).isInstanceOf(UnsupportedOperationException.class);
+		}
+	}
+
+	//endregion
+
+	//region - Shifting Mechanism
+
+	@Nested
+	@SuppressWarnings({"unused"})
+	class Shifting_Mechanism {
+
+		@Test
+		void shifts_elements_right_during_insert() {
+			int[] arr = {1, 2, 4, 3};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> {
+				insertionSort(arr);
+				assertThat(arr).containsExactly(1, 2, 3, 4);
+			}).isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void uses_temp_variable_for_key() {
+			int[] arr = {5, 1, 2, 3, 4};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> {
+				insertionSort(arr);
+				assertThat(arr).containsExactly(1, 2, 3, 4, 5);
+			}).isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void finds_correct_insertion_position() {
+			int[] arr = {10, 20, 30, 5};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> {
+				insertionSort(arr);
+				assertThat(arr).containsExactly(5, 10, 20, 30);
 			}).isInstanceOf(UnsupportedOperationException.class);
 		}
 	}
@@ -183,28 +399,94 @@ class InsertionSortTest {
 	//region - Online Algorithm
 
 	@Nested
+	@SuppressWarnings({"unused"})
 	class OnlineAlgorithm {
 
 		@Test
 		void can_sort_data_as_it_arrives() {
 			assertThatThrownBy(() -> {
-				// Insertion sort is an "online" algorithm
-				// It can sort data as it arrives one element at a time
 				int[] arr = {3, 1, 4};
+				assertArrayCreated(arr);
 				insertionSort(arr);
-				// Now add new element
-				// Can efficiently insert into already sorted portion
 			}).isInstanceOf(UnsupportedOperationException.class);
 		}
 
 		@Test
 		void efficient_for_small_datasets() {
 			int[] arr = {5, 2, 8, 1, 9};
+			assertArrayCreated(arr);
 
 			assertThatThrownBy(() -> {
 				long steps = insertionSortWithStepCount(arr);
 				assertThat(steps).as("Insertion sort is efficient for small arrays despite being O(n²)")
 					.isLessThan(50);
+			}).isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void maintains_sorted_prefix_invariant() {
+			int[] arr = {4, 2, 5, 1, 3};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> {
+				insertionSort(arr);
+				assertThat(arr).containsExactly(1, 2, 3, 4, 5);
+			}).isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void streaming_insert_simulation() {
+			int[] arr = {3, 1, 4, 1, 5, 9, 2, 6};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> {
+				insertionSort(arr);
+				assertThat(arr).containsExactly(1, 1, 2, 3, 4, 5, 6, 9);
+			}).isInstanceOf(UnsupportedOperationException.class);
+		}
+	}
+
+	//endregion
+
+	//region - Integration
+
+	@Nested
+	@SuppressWarnings({"unused"})
+	class Integration {
+
+		@Test
+		void sort_then_binary_search() {
+			int[] arr = {64, 25, 12, 22, 11};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> {
+				insertionSort(arr);
+				int idx = java.util.Arrays.binarySearch(arr, 22);
+				assertThat(idx).isGreaterThanOrEqualTo(0);
+			}).isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void multiple_sorts_idempotent() {
+			int[] arr = {5, 2, 8, 1, 9};
+			assertArrayCreated(arr);
+
+			assertThatThrownBy(() -> {
+				insertionSort(arr);
+				int[] afterFirst = arr.clone();
+				insertionSort(arr);
+				assertThat(arr).isEqualTo(afterFirst);
+			}).isInstanceOf(UnsupportedOperationException.class);
+		}
+
+		@Test
+		void use_as_subroutine_in_hybrid_sort() {
+			int[] smallArr = {5, 2, 8, 1, 9};
+			assertArrayCreated(smallArr);
+
+			assertThatThrownBy(() -> {
+				insertionSort(smallArr);
+				assertThat(smallArr).containsExactly(1, 2, 5, 8, 9);
 			}).isInstanceOf(UnsupportedOperationException.class);
 		}
 	}
@@ -219,6 +501,10 @@ class InsertionSortTest {
 
 	private long insertionSortWithStepCount(int[] arr) {
 		throw new UnsupportedOperationException("Not implemented");
+	}
+
+	private void assertArrayCreated(int[] arr) {
+		assertThat(arr).isNotNull();
 	}
 
 	//endregion

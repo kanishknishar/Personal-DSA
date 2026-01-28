@@ -2,7 +2,7 @@ package data_structures.queue;
 
 import java.util.Iterator;
 
-@SuppressWarnings({ "NullableProblems", "DataFlowIssue", "ConstantConditions", "ReturnOfNull", "unused" })
+@SuppressWarnings({ "NullableProblems", "ConstantConditions", "ReturnOfNull", "unused" })
 public class LinkedQueue<T> implements Iterable<T> {
 
 	public void enqueue(T value) {

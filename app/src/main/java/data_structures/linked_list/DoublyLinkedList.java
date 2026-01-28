@@ -1,203 +1,314 @@
 package data_structures.linked_list;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings({"ConstantConditions", "ReturnOfNull", "unused"})
 public class DoublyLinkedList<T> {
-	private final Node<T> head;
-	private final Node<T> tail;
-	public int size;
 
-	public DoublyLinkedList(T headValue, T tailValue) {
-		head = new Node<T>(headValue);
-		tail = new Node<T>(tailValue);
-		head.next = tail;
-		tail.prev = head;
-	}
+    public final Node<T> head;
+    public final Node<T> tail;
+    public int size;
 
-	//region - Add
-	public void addAt(int index, T value) {
-		if (index < 0 || (index > size)) {
-			throw new IndexOutOfBoundsException();
-		}
+    public DoublyLinkedList(T headValue, T tailValue) {
+        head = new Node<>(headValue);
+        tail = new Node<>(tailValue);
+        head.next = tail;
+        tail.prev = head;
+    }
 
-		if (index == 0) {
-			new Node<>(value, head, head.next);
-		} else if (index == size) {
-			new Node<>(value, tail.prev, tail);
-		} else {
-			Node<T> nodeShiftLeft = getNode(index - 1);
+    //region - Add
+    public void addAt(int index, T value) {
+        if (index < 0 || (index > size)) {
+            throw new IndexOutOfBoundsException();
+        }
 
-			new Node<>(value, nodeShiftLeft, nodeShiftLeft.next);
-		}
+        Node<T> prevNode;
+        if (index <= size / 2) {
+            prevNode = nodeBackwardTraversal(index - 1);
+        } else {
+            prevNode = valueBackwardTraversal(index - 1);
+        }
 
-		size++;
+        new Node<>(value, prevNode, prevNode.next);
 
-	}
+        size++;
+    }
 
-	public void addFirst(T value) {
-		addAt(0, value);
-	}
+    public void addFirst(T value) {
+        addAt(0, value);
+    }
 
-	public void addLast(T value) {
-		addAt(size, value);
-	}
-	//endregion
+    public void addLast(T value) {
+        var previousLast = tail.prev;
 
-	//region - Delete
-	public T deleteAt(int index) {
-		if (index >= size || index < 0) {
-			throw new IndexOutOfBoundsException();
-		}
+        new Node<>(value, previousLast, tail);
+        size++;
+    }
 
-		if (index == 0) {
-			Node<T> deletedNode = head.next;
-			T deletedVal = deletedNode.value;
-			deletedNode.next.prev = head;
-			head.next = deletedNode.next;
-			size--;
-			return deletedVal;
-		}
+    public void addBefore(Node<T> node, T value) {
+        new Node<>(value, node.prev, node);
+        size++;
+    }
 
-		Node<T> deletedNode = getNode(index);
+    public void addAfter(Node<T> node, T value) {
+        new Node<>(value, node, node.next);
+        size++;
+    }
+    //endregion
 
-		T deletedVal = deletedNode.value;
+    //region - Delete
+    public T deleteAt(int index) {
+        if (index >= size || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
 
-		deletedNode.prev.next = deletedNode.next;
-		deletedNode.next.prev = deletedNode.prev;
+        Node<T> deletedNode = getNode(index);
 
-		size--;
+        T deletedVal = deletedNode.value;
 
-		return deletedVal;
-	}
+        deletedNode.prev.next = deletedNode.next;
+        deletedNode.next.prev = deletedNode.prev;
 
-	public T deleteFirst() {
-		return deleteAt(0);
-	}
+        size--;
 
-	public T deleteLast() {
-		return deleteAt(size - 1);
-	}
+        return deletedVal;
+    }
 
-	public boolean deleteValue(T value) {
-		for (int i = 0; i < size; i++) {
-			T nodeVal = getNode(i).value;
-			if (nodeVal == value) {
-				deleteAt(i);
-				return true;
-			}
-		}
+    public T deleteFirst() {
+        return deleteAt(0);
+    }
 
-		return false;
-	}
-	//endregion
+    public T deleteLast() {
+        if (size == 0) {
+            throw new IndexOutOfBoundsException();
+        }
 
-	//region - Get
-	public T get(int index) {
-		Node<T> node = getNode(index);
+        var deletedNode = tail.prev;
+        var retainPreviousNode = deletedNode.prev;
 
-		return node.value;
-	}
+        retainPreviousNode.next = tail;
+        tail.prev = retainPreviousNode;
+        size--;
+        return deletedNode.value;
+    }
 
-	private Node<T> getNode(int index) {
-		if (index >= size || index < 0) {
-			throw new IndexOutOfBoundsException();
-		}
+    public boolean deleteValue(T value) {
+        var curr = head;
 
-		var curr = head;
+        while (curr.next != tail) {
+            curr = curr.next;
+            if (curr.value.equals(value)) {
+                curr.next.prev = curr.prev;
+                curr.prev.next = curr.next;
+                size--;
+                return true;
+            }
+        }
 
-		for (int i = 0; i <= index; i++) {
-			curr = curr.next;
-		}
+        return false;
+    }
+    //endregion
 
-		return curr;
-	}
+    //region - Get
+    public T get(int index) {
+        if (index <= (size / 2)) {
+            return nodeForwardTraversal(index);
+        }
 
-	public T getFirst() {
-		return get(0);
-	}
+        return valueForwardTraversal(index);
+    }
 
-	public T getLast() {
-		return get(size - 1);
-	}
+    public T getFirst() {
+        return get(0);
+    }
 
-	public int indexOf(T value) {
-		throw new UnsupportedOperationException();
-	}
+    public T getLast() {
+        if (tail.prev == head) {
+            throw new IndexOutOfBoundsException();
+        }
 
-	public int lastIndexOf(T value) {
-		throw new UnsupportedOperationException();
-	}
-	//endregion
+        return tail.prev.value;
+    }
 
-	//region - Set
-	public void setAt(int index, T value) {
-		getNode(index).value = value;
-	}
+    public List<Integer> getAllIndices(T value) {
+        var matches = new ArrayList<Integer>();
+        var curr = head;
 
-	public void setFirst(T value) {
-		setAt(0, value);
-	}
+        for (int i = 0; i < size; i++) {
+            curr = curr.next;
 
-	public void setLast(T value) {
-		setAt(size - 1, value);
-	}
-	//endregion
+            if (curr.value.equals(value)) {
+                matches.add(i);
+            }
+        }
 
-	//region - Helpers
-	public boolean isEmpty() {
-		return size == 0;
-	}
+        return matches;
+    }
 
-	public boolean contains(T value) {
-		throw new UnsupportedOperationException();
-	}
+    public int getFirstIndexOf(T value) {
+        var curr = head;
 
-	public void clear() {
-		throw new UnsupportedOperationException();
-	}
+        var matches = new ArrayList<Integer>();
 
-	public T[] toArray() {
-		throw new UnsupportedOperationException();
-	}
+        for (int i = 0; i < size; i++) {
+            curr = curr.next;
 
-	@Override
-	public String toString() {
-		if (isEmpty()) {
-			return "[]";
-		}
+            if (curr.value.equals(value)) {
+                return i;
+            }
+        }
 
-		var curr = head;
-		StringBuilder sb = new StringBuilder();
+        return -1;
+    }
 
-		while (curr.next != tail) {
-			sb.append("[").append(curr.next).append("]").append(" <-> ");
-			curr = curr.next;
-		}
+    public int getLastIndexOf(T value) {
+        List<Integer> matches = getAllIndices(value);
 
-		return sb.substring(0, sb.length() - 5);
-	}
+        if (matches.isEmpty()) {
+            return -1;
+        }
 
-	private static class Node<T> {
-		T value;
-		Node<T> prev;
-		Node<T> next;
+        return matches.getLast();
+    }
 
-		public Node(T value, Node<T> prev, Node<T> next) {
-			this.value = value;
-			Node<T> oldNext = prev.next;
-			prev.next = this;
-			this.prev = prev;
-			this.next = oldNext;
-			oldNext.prev = this;
-		}
+    public Node<T> getNode(int index) {
+        if (index <= size / 2) {
+            return nodeBackwardTraversal(index);
+        } else {
+            return valueBackwardTraversal(index);
+        }
+    }
+    //endregion
 
-		public Node(T value) {
-			this.value = value;
-		}
+    //region - Set
+    public void setAt(int index, T value) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
 
-		@Override
-		public String toString() {
-			return value.toString();
-		}
-	}
-	//endregion
+        getNode(index).value = value;
+    }
+
+    public void setFirst(T value) {
+        setAt(0, value);
+    }
+
+    public void setLast(T value) {
+        if (isEmpty()) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        tail.prev.value = value;
+    }
+    //endregion
+
+    //region - Iterator
+    public T nodeForwardTraversal(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        var curr = nodeBackwardTraversal(index);
+
+        return curr.value;
+    }
+
+    public Node<T> nodeBackwardTraversal(int index) {
+        System.out.println("Getting node straight");
+        var curr = head;
+
+        for (int i = 0; i <= index; i++) {
+            curr = curr.next;
+        }
+        return curr;
+    }
+
+    public T valueForwardTraversal(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        var curr = valueBackwardTraversal(index);
+
+        return curr.value;
+    }
+
+    public Node<T> valueBackwardTraversal(int index) {
+        System.out.println("Getting node reverse");
+
+        var curr = tail;
+
+        for (int i = size; i > index; i--) {
+            curr = curr.prev;
+        }
+
+        return curr;
+    }
+    //endregion
+
+    //region - Utilities
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public boolean contains(T value) {
+        return getFirstIndexOf(value) != -1;
+    }
+
+    public T[] toArray() {
+        var curr = head;
+
+        T[] array = (T[]) new Object[size];
+
+        for (int i = 0; i < size; i++) {
+            curr = curr.next;
+            array[i] = curr.value;
+        }
+
+        return array;
+    }
+
+    @Override
+    public String toString() {
+        if (isEmpty()) {
+            return "[]";
+        }
+
+        var curr = head;
+        StringBuilder sb = new StringBuilder();
+
+        while (curr.next != tail) {
+            sb.append("[").append(curr.next).append("]").append(" <-> ");
+            curr = curr.next;
+        }
+
+        return sb.substring(0, sb.length() - 5);
+    }
+
+    //endregion
+    public static class Node<T> {
+
+        public T value;
+        public Node<T> prev;
+        public Node<T> next;
+
+        public Node(T value, Node<T> prev, Node<T> next) {
+            this.value = value;
+            Node<T> oldNext = prev.next;
+            prev.next = this;
+            this.prev = prev;
+            this.next = oldNext;
+            oldNext.prev = this;
+        }
+
+        public Node(T value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return value.toString();
+        }
+    }
 }

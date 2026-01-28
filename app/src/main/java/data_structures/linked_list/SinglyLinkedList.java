@@ -1,15 +1,19 @@
 package data_structures.linked_list;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @SuppressWarnings({"ConstantConditions", "ReturnOfNull"})
 public class SinglyLinkedList<T> {
-	private Node<T> head;
+	public Node<T> head;
+	public Node<T> tail;
 	public int size;
 
+	//region - Add
 	public void addAt(int index, T value) {
 		if (index < 0 || index > size) {
-			throw new ArrayIndexOutOfBoundsException();
+			throw new IndexOutOfBoundsException();
 		}
 
 		if (isEmpty() || index == 0) {
@@ -17,34 +21,39 @@ public class SinglyLinkedList<T> {
 			return;
 		}
 
-		var curr = head;
+		// index = 0
+		var curr = getNode(index - 1);
 
-		for (int i = 0; i < (index - 1); i++) {
-			curr = curr.next;
+		Node<T> newNode = new Node<>(value, curr.next);
+		curr.next = newNode;
+
+		if (curr.next.next == null) {
+			tail = newNode;
 		}
 
-		Node<T> oldNode = curr.next;
-		curr.next = new Node<>(value, oldNode);
 		size++;
 	}
 
 	public void addFirst(T value) {
-		Node<T> newHead = new Node<>(value);
-
-		if (head != null) {
-			Node<T> oldHead = head;
-			head = newHead;
-			head.next = oldHead;
+		if (isEmpty()) {
+			head = new Node<>(value);
+			tail = head;
 			size++;
 			return;
 		}
 
-		head = newHead;
+		var oldHead = head;
+		head = new Node<>(value, oldHead);
+
+		if (oldHead.next == null) {
+			tail = oldHead;
+		}
+
 		size++;
 	}
 
 	public void addLast(T value) {
-		if (head == null) {
+		if (isEmpty()) {
 			addFirst(value);
 			return;
 		}
@@ -55,65 +64,243 @@ public class SinglyLinkedList<T> {
 			curr = curr.next;
 		}
 
-		curr.next = new Node<>(value);
+		Node<T> newTail = new Node<>(value);
+		curr.next = newTail;
+		tail = newTail;
 		size++;
+	}
+
+	public void addBefore(Node<T> node, T value) {
+		if (isEmpty()) {
+			throw new IllegalStateException();
+		}
+
+		var curr = head;
+
+		for (int i = 0; i < size; i++) {
+			if (curr.equals(node)) {
+				addAt(i, value);
+				return;
+			}
+
+			curr = curr.next;
+		}
+
+		throw new NoSuchElementException();
+	}
+
+	public void addAfter(Node<T> node, T value) {
+		if (isEmpty()) {
+			throw new IllegalStateException();
+		}
+
+		var curr = head;
+
+		for (int i = 0; i < size; i++) {
+			if (curr.equals(node)) {
+				addAt(i + 1, value);
+				return;
+			}
+
+			curr = curr.next;
+		}
+
+		throw new NoSuchElementException();
+	}
+//endregion
+
+	//region - Delete
+	public T deleteFirst() {
+		var oldHead = head;
+
+		switch (size) {
+			case 0 -> throw new IllegalStateException();
+			case 1 -> {
+				head = null;
+				tail = null;
+			}
+			case 2 -> head = tail;
+			default -> head = head.next;
+		}
+
+		size--;
+		return oldHead.value;
+	}
+
+	public T deleteLast() {
+		return switch (size) {
+			case 0 -> throw new IllegalStateException();
+			case 1 -> deleteFirst();
+			case 2 -> {
+				var deletedNode = tail;
+				tail = head;
+				tail.next = null;
+				size--;
+				yield deletedNode.value;
+			}
+			default -> {
+				var curr = getNode(size - 2);
+
+				var deletedNode = curr.next;
+				tail = curr;
+				tail.next = null;
+				size--;
+				yield deletedNode.value;
+			}
+		};
 	}
 
 	public T deleteAt(int index) {
 		if (index < 0 || index >= size) {
-			throw new ArrayIndexOutOfBoundsException("List is empty - operation failed.");
+			throw new IndexOutOfBoundsException();
 		}
 
-		Node<T> curr = head;
-
-		if (index == 0) {
-			var deletedValue = curr.value;
-			head = curr.next;
-			size--;
-			return deletedValue;
+		if (index == size - 1) {
+			return deleteLast();
 		}
 
-		for (int i = 0; i < index - 1; i++) {
-			System.out.println("Loop number: " + i);
-			System.out.println("Current value before reassignment: " + curr.value);
+		return switch (size) {
+			case 0 -> throw new IllegalStateException();
+			case 1 -> deleteFirst();
+			default -> {
+				var curr = head;
 
+				if (index == 0) {
+					yield deleteFirst();
+				}
+
+				for (int i = 0; i < index - 1; i++) {
+					curr = curr.next;
+				}
+
+				var deletedNode = curr.next;
+
+				curr.next = curr.next.next;
+
+				size--;
+
+				yield deletedNode.value;
+			}
+		};
+	}
+
+
+	public boolean deleteValue(T value) {
+		if (isEmpty()) {
+			throw new IllegalStateException();
+		}
+
+		var curr = head;
+		var prevNode = curr;
+
+		for (int i = 0; i < size; i++) {
+			if (curr.value.equals(value)) {
+				if (i == 0) {
+					deleteFirst();
+					return true;
+				}
+
+				if (i == size - 1) {
+					deleteLast();
+					return true;
+				}
+
+				prevNode.next = curr.next;
+				size--;
+				return true;
+			}
+
+			prevNode = curr;
 			curr = curr.next;
-
-			System.out.println("Reassigned curr to: " + curr.value);
 		}
 
-		Node<T> deletedNode = curr.next;
-		curr.next = curr.next.next;
-
-		size--;
-		return deletedNode.value;
+		return false;
 	}
+//endregion
 
-	public T deleteFirst() {
+	//region - Get
+	public T getFirst() {
 		if (isEmpty()) {
-			throw new NoSuchElementException("List is empty - operation failed.");
+			throw new IllegalStateException();
 		}
 
-		return deleteAt(0);
+		return head.value;
 	}
 
-	public T deleteLast() {
+	public T getLast() {
 		if (isEmpty()) {
-			throw new NoSuchElementException("List is empty - operation failed.");
+			throw new IllegalStateException();
 		}
 
-		return deleteAt(size - 1);
+		return tail.value;
 	}
 
-	public T get(int index) {
+	public T getAt(int index) {
+		if (isEmpty()) {
+			throw new IllegalStateException();
+		}
+
 		if (index < 0 || index >= size) {
 			throw new IndexOutOfBoundsException();
 		}
 
-		return getNode(index).value;
+		var curr = getNode(index);
+
+		return curr.value;
 	}
 
-	private Node<T> getNode(int index) {
+	public int getFirstIndexOf(T value) {
+		if (isEmpty()) {
+			throw new IllegalStateException();
+		}
+
+		var curr = head;
+
+		for (int i = 0; i < size; i++) {
+			if (curr.value.equals(value)) return i;
+
+			curr = curr.next;
+		}
+
+		return -1;
+	}
+
+	public int getLastIndexOf(T value) {
+		if (isEmpty()) {
+			throw new IllegalStateException();
+		}
+
+		var matches = getAllIndices(value);
+
+		return matches.isEmpty() ? -1 : matches.getLast();
+	}
+
+	public List<Integer> getAllIndices(T value) {
+		if (isEmpty()) {
+			throw new IllegalStateException();
+		}
+
+		var curr = head;
+
+		List<Integer> integers = new ArrayList<>();
+
+		for (int i = 0; i < size; i++) {
+			if (curr.value.equals(value)) integers.add(i);
+			curr = curr.next;
+		}
+
+		return integers;
+	}
+
+	public Node<T> getNode(int index) {
+		if (isEmpty()) {
+			throw new IllegalStateException();
+		}
+
+		if (index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException();
+		}
+
 		var curr = head;
 
 		for (int i = 0; i < index; i++) {
@@ -122,57 +309,37 @@ public class SinglyLinkedList<T> {
 
 		return curr;
 	}
+//endregion
 
-	public T getFirst() {
-		return get(0);
-	}
-
-	public T getLast() {
-		return get(size - 1);
-	}
-
-	public void set(int index, T value) {
-		if (index >= size || index < 0) {
-			throw new IndexOutOfBoundsException();
+	//region - Set
+	public void setFirst(T value) {
+		if (isEmpty()) {
+			throw new IllegalStateException();
 		}
 
-		getNode(index).value = value;
-
-	}
-
-	public int indexOf(T value) {
-		throw new UnsupportedOperationException("Not implemented");
-	}
-
-	public int lastIndexOf(T value) {
-		throw new UnsupportedOperationException("Not implemented");
-	}
-
-	public boolean contains(T value) {
-		throw new UnsupportedOperationException("Not implemented");
-	}
-
-	public void clear() {
-		throw new UnsupportedOperationException("Not implemented");
-	}
-
-	public T[] toArray() {
-		throw new UnsupportedOperationException("Not implemented");
-	}
-
-	public boolean deleteValue(T value) {
-		throw new UnsupportedOperationException("Not implemented");
-	}
-
-	public void setFirst(T value) {
-		throw new UnsupportedOperationException("Not implemented");
+		head.value = value;
 	}
 
 	public void setLast(T value) {
-		throw new UnsupportedOperationException("Not implemented");
+		if (isEmpty()) {
+			throw new IllegalStateException();
+		}
+
+		tail.value = value;
 	}
 
+	public void setAt(int index, T value) {
+		if (isEmpty()) {
+			throw new IllegalStateException();
+		}
+
+		getNode(index).value = value;
+	}
+//endregion
+
+	//region - Utilities
 	public int size() {
+		// TODO
 		return size;
 	}
 
@@ -180,30 +347,58 @@ public class SinglyLinkedList<T> {
 		return size == 0;
 	}
 
+	public T[] toArray() {
+		var curr = head;
+
+		ArrayList<T> asArrayList = new ArrayList<>();
+
+		while (curr != null) {
+			asArrayList.add(curr.value);
+
+			curr = curr.next;
+		}
+
+		return (T[]) asArrayList.toArray();
+	}
+
+	private List<Node<T>> getAllNodes() {
+		var curr = head;
+
+		ArrayList<Node<T>> nodesList = new ArrayList<>();
+
+		while (curr.next != null) {
+			nodesList.add(curr);
+			curr = curr.next;
+		}
+
+		return nodesList;
+	}
+
 	@Override
 	public String toString() {
-		if (head == null) {
+		if (isEmpty()) {
 			return "[]";
 		}
 
-		Node<T> curr = head;
+		var curr = head;
 
-		var sb = new StringBuilder("[").append(head.value);
-		var count = 1;
+		var sb = new StringBuilder("[").append(curr.value);
 
 		while (curr.next != null) {
-			System.out.println("Loop iteration: " + count++);
-			sb.append(curr.value).append(" -> ");
+			sb.append(" -> ").append(curr.next.value);
+			curr = curr.next;
 		}
 
 		sb.append("]");
 
 		return sb.toString();
 	}
+//endregion
 
-	private static class Node<T> {
-		T value;
-		Node<T> next;
+	//region - Node
+	public static class Node<T> {
+		public T value;
+		public Node<T> next;
 
 		public Node(T value, Node<T> next) {
 			this.value = value;
@@ -219,4 +414,5 @@ public class SinglyLinkedList<T> {
 			return value + " -> ";
 		}
 	}
+//endregion
 }
